@@ -30,10 +30,19 @@ body {
   cursor: pointer;
 }
 
-.slider::-webkit-slider-track {
-  background: #10b981;
+/* Fallback for browsers that don't support pseudo-elements */
+input[type="range"] {
+  background: #059669 !important;
   height: 16px;
   border-radius: 8px;
+  border: none;
+}
+
+.slider::-webkit-slider-track {
+  background: #059669 !important;
+  height: 16px;
+  border-radius: 8px;
+  border: none;
 }
 
 .slider::-webkit-slider-thumb {
@@ -53,7 +62,7 @@ body {
 }
 
 .slider::-moz-range-track {
-  background: #10b981;
+  background: #059669 !important;
   height: 16px;
   border-radius: 8px;
   border: none;

@@ -73,41 +73,41 @@ function HomePage() {
 
 
             {/* Дополнительные поля */}
-            <div className="mt-6 space-y-4">
-              <div>
-                <label className="block text-gray-900 text-sm font-semibold mb-2">
+            <div className="mt-6 space-y-6">
+              <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+                <label className="block text-gray-600 text-sm font-medium mb-3">
                   Номер телефона
                 </label>
                 <input
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 placeholder-gray-500"
+                  className="w-full text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-900 text-sm font-semibold mb-2">
+              <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+                <label className="block text-gray-600 text-sm font-medium mb-3">
                   Email
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 placeholder-gray-500"
+                  className="w-full text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
                   placeholder="user@example.com"
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-900 text-sm font-semibold mb-2">
+              <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+                <label className="block text-gray-600 text-sm font-medium mb-3">
                   Цель займа
                 </label>
                 <select
                   value={loanPurpose}
                   onChange={(e) => setLoanPurpose(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                  className="w-full text-2xl font-bold text-gray-900 bg-transparent border-none outline-none"
                 >
                   <option value="Покупка товаров и услуг">🛒 Покупка товаров и услуг</option>
                   <option value="Медицинские расходы">🏥 Медицинские расходы</option>
