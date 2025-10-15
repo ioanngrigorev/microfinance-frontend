@@ -3,19 +3,21 @@ import { useState } from 'react'
 
 function HomePage() {
   const [amount, setAmount] = useState(1000)
-  const [term, setTerm] = useState(30)
+  const [term, setTerm] = useState(12)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [loanPurpose, setLoanPurpose] = useState('Покупка товаров и услуг')
-  const interestRate = 2.0 // 2% в день
+  const interestRate = 20.0 // 20% годовых
 
   const calculatePayment = () => {
-    const totalInterest = (amount * interestRate * term) / 100
+    // 20% годовых = 20/12% в месяц
+    const monthlyRate = interestRate / 12
+    const totalInterest = (amount * monthlyRate * term) / 100
     const totalAmount = amount + totalInterest
     return {
       totalInterest: totalInterest.toFixed(2),
       totalAmount: totalAmount.toFixed(2),
-      dailyPayment: (totalAmount / term).toFixed(2)
+      monthlyPayment: (totalAmount / term).toFixed(2)
     }
   }
 
@@ -68,21 +70,21 @@ function HomePage() {
                   Срок займа
                 </label>
                 <div className="text-3xl font-bold text-gray-900">
-                  {term} дней
+                  {term} месяцев
                 </div>
               </div>
               <input
                 type="range"
                 min="1"
-                max="365"
+                max="36"
                 step="1"
                 value={term}
                 onChange={(e) => setTerm(Number(e.target.value))}
                 className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
               />
               <div className="flex justify-between text-sm text-gray-400 mt-3">
-                <span>1 день</span>
-                <span>365 дней</span>
+                <span>1 месяц</span>
+                <span>36 месяцев</span>
               </div>
             </div>
 
@@ -97,8 +99,9 @@ function HomePage() {
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
+                  maxLength={12}
                   className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+15551234567"
                 />
               </div>
 
@@ -110,6 +113,7 @@ function HomePage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  maxLength={50}
                   className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 placeholder-gray-400"
                   placeholder="user@example.com"
                 />
@@ -119,57 +123,64 @@ function HomePage() {
                 <label className="block text-gray-700 font-medium mb-3">
                   Цель займа
                 </label>
-                <select
-                  value={loanPurpose}
-                  onChange={(e) => setLoanPurpose(e.target.value)}
-                  className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900"
-                >
-                  <option value="Покупка товаров и услуг">Покупка товаров и услуг</option>
-                  <option value="Медицинские расходы">Медицинские расходы</option>
-                  <option value="Образование">Образование</option>
-                  <option value="Ремонт дома/квартиры">Ремонт дома/квартиры</option>
-                  <option value="Покупка автомобиля">Покупка автомобиля</option>
-                  <option value="Свадьба">Свадьба</option>
-                  <option value="Отпуск/путешествие">Отпуск/путешествие</option>
-                  <option value="Бизнес-нужды">Бизнес-нужды</option>
-                  <option value="Погашение других долгов">Погашение других долгов</option>
-                  <option value="Непредвиденные расходы">Непредвиденные расходы</option>
-                  <option value="Покупка техники">Покупка техники</option>
-                  <option value="Другое">Другое</option>
-                </select>
+                <div className="relative">
+                  <select
+                    value={loanPurpose}
+                    onChange={(e) => setLoanPurpose(e.target.value)}
+                    className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 appearance-none cursor-pointer pr-12"
+                  >
+                    <option value="Покупка товаров и услуг">Покупка товаров и услуг</option>
+                    <option value="Медицинские расходы">Медицинские расходы</option>
+                    <option value="Образование">Образование</option>
+                    <option value="Ремонт дома/квартиры">Ремонт дома/квартиры</option>
+                    <option value="Покупка автомобиля">Покупка автомобиля</option>
+                    <option value="Свадьба">Свадьба</option>
+                    <option value="Отпуск/путешествие">Отпуск/путешествие</option>
+                    <option value="Бизнес-нужды">Бизнес-нужды</option>
+                    <option value="Погашение других долгов">Погашение других долгов</option>
+                    <option value="Непредвиденные расходы">Непредвиденные расходы</option>
+                    <option value="Покупка техники">Покупка техники</option>
+                    <option value="Другое">Другое</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-6 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Правая колонка - результаты */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Расчет займа</h3>
+          <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8">
+            <h3 className="text-2xl font-bold text-white mb-8">Расчет займа</h3>
             
             <div className="space-y-6">
-              <div className="flex justify-between items-center py-4 border-b border-gray-200">
-                <span className="text-gray-600 font-medium">Сумма займа</span>
-                <span className="text-2xl font-bold text-gray-900">${amount.toLocaleString()}</span>
+              <div className="flex justify-between items-center py-4 border-b border-gray-700">
+                <span className="text-gray-300 font-medium">Сумма займа</span>
+                <span className="text-2xl font-bold text-white">${amount.toLocaleString()}</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-gray-200">
-                <span className="text-gray-600 font-medium">Срок</span>
-                <span className="text-2xl font-bold text-gray-900">{term} дней</span>
+              <div className="flex justify-between items-center py-4 border-b border-gray-700">
+                <span className="text-gray-300 font-medium">Срок</span>
+                <span className="text-2xl font-bold text-white">{term} месяцев</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-gray-200">
-                <span className="text-gray-600 font-medium">Проценты</span>
-                <span className="text-2xl font-bold text-orange-600">${payment.totalInterest}</span>
+              <div className="flex justify-between items-center py-4 border-b border-gray-700">
+                <span className="text-gray-300 font-medium">Проценты</span>
+                <span className="text-2xl font-bold text-orange-400">${payment.totalInterest}</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b-2 border-gray-300">
-                <span className="text-gray-600 font-medium">Дневной платеж</span>
-                <span className="text-2xl font-bold text-blue-600">${payment.dailyPayment}</span>
+              <div className="flex justify-between items-center py-4 border-b-2 border-gray-600">
+                <span className="text-gray-300 font-medium">Месячный платеж</span>
+                <span className="text-2xl font-bold text-blue-400">${payment.monthlyPayment}</span>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 mt-6">
+              <div className="bg-gray-800 rounded-2xl p-6 mt-6">
                 <div className="flex justify-between items-center">
-                  <span className="text-xl font-semibold text-gray-900">К возврату</span>
-                  <span className="text-4xl font-bold text-green-600">${payment.totalAmount}</span>
+                  <span className="text-xl font-semibold text-white">К возврату</span>
+                  <span className="text-4xl font-bold text-green-400">${payment.totalAmount}</span>
                 </div>
               </div>
             </div>
