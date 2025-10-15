@@ -40,6 +40,12 @@ function Header() {
             >
               Оформить займ
             </Link>
+            <Link 
+              to="/admin" 
+              className={`px-4 py-2 rounded-lg text-white transition bg-purple-500 hover:bg-purple-600 ${isActive('/admin')}`}
+            >
+              Админ
+            </Link>
           </div>
         </div>
       </nav>
