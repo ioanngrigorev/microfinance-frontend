@@ -19,31 +19,6 @@ function HomePage() {
   const payment = calculatePayment()
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* Hero Section */}
-      <div className="bg-white rounded-2xl shadow-2xl p-12 mb-12">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold text-gray-800 mb-6">
-            Быстрые займы онлайн 💸
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Получите деньги на карту за 15 минут без посещения офиса
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Link 
-              to="/calculator" 
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
-            >
-              Рассчитать займ
-            </Link>
-            <Link 
-              to="/application" 
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
-            >
-              Оформить сейчас
-            </Link>
-          </div>
-        </div>
-      </div>
 
       {/* Кредитный калькулятор */}
       <div className="bg-white rounded-2xl shadow-2xl p-8 mb-12">
