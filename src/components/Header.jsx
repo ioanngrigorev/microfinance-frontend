@@ -4,51 +4,59 @@ function Header() {
   const location = useLocation()
 
   const isActive = (path) => {
-    return location.pathname === path ? 'bg-white/20' : 'hover:bg-white/10'
+    return location.pathname === path ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'
   }
 
   return (
-    <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
-      <nav className="container mx-auto px-4 py-4">
+    <header className="bg-black/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+      <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-white">
-            💰 МикроФинанс
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform">
+              💰
+            </div>
+            <span className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+              МикроФинанс
+            </span>
           </Link>
           
-          <div className="flex gap-4">
+          <div className="hidden md:flex items-center space-x-1">
             <Link 
               to="/" 
-              className={`px-4 py-2 rounded-lg text-white transition ${isActive('/')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/')}`}
             >
               Главная
             </Link>
             <Link 
               to="/calculator" 
-              className={`px-4 py-2 rounded-lg text-white transition ${isActive('/calculator')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/calculator')}`}
             >
               Калькулятор
             </Link>
             <Link 
               to="/products" 
-              className={`px-4 py-2 rounded-lg text-white transition ${isActive('/products')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/products')}`}
             >
               Продукты
             </Link>
+          </div>
+
+          <div className="flex items-center space-x-3">
             <Link 
               to="/application" 
-              className={`px-4 py-2 rounded-lg text-white transition bg-green-500 hover:bg-green-600`}
+              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-green-500/25 hover:scale-105"
             >
               Оформить займ
             </Link>
             <Link 
               to="/personal-account" 
-              className={`px-4 py-2 rounded-lg text-white transition bg-yellow-500 hover:bg-yellow-600 ${isActive('/personal-account')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/personal-account')}`}
             >
               Личный кабинет
             </Link>
             <Link 
               to="/admin" 
-              className={`px-4 py-2 rounded-lg text-white transition bg-purple-500 hover:bg-purple-600 ${isActive('/admin')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/admin')}`}
             >
               Админ
             </Link>
