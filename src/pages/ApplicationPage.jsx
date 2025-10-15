@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import StripePayment from '../components/StripePayment'
 
 function ApplicationPage() {
   const location = useLocation()
@@ -20,6 +19,13 @@ function ApplicationPage() {
     email: location.state?.email || 'user@example.com'
   })
 
+  const [cardData, setCardData] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    cardholderName: ''
+  })
+
   const [errors, setErrors] = useState({})
 
   const handleProductSelect = (product) => {
@@ -27,15 +33,56 @@ function ApplicationPage() {
     setStep(3) // Переход к оплате
   }
 
-  const handlePaymentSuccess = (paymentIntent) => {
-    console.log('Payment succeeded:', paymentIntent)
-    setPaymentCompleted(true)
-    setStep(4) // Переход к финальному рассмотрению
+  const handleCardDataChange = (e) => {
+    const { name, value } = e.target
+    setCardData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+    // Очищаем ошибку при изменении поля
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
   }
 
-  const handlePaymentError = (error) => {
-    console.error('Payment failed:', error)
-    setErrors({ payment: 'Ошибка при оплате. Попробуйте еще раз.' })
+  const validateCardData = () => {
+    const newErrors = {}
+    
+    if (!cardData.cardNumber || cardData.cardNumber.length < 16) {
+      newErrors.cardNumber = 'Введите корректный номер карты'
+    }
+    
+    if (!cardData.expiryDate || !/^\d{2}\/\d{2}$/.test(cardData.expiryDate)) {
+      newErrors.expiryDate = 'Введите дату в формате MM/YY'
+    }
+    
+    if (!cardData.cvv || cardData.cvv.length < 3) {
+      newErrors.cvv = 'Введите корректный CVV код'
+    }
+    
+    if (!cardData.cardholderName || cardData.cardholderName.length < 2) {
+      newErrors.cardholderName = 'Введите имя держателя карты'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handlePaymentSubmit = (e) => {
+    e.preventDefault()
+    
+    if (!validateCardData()) {
+      return
+    }
+
+    setLoading(true)
+    
+    // Имитация обработки платежа
+    setTimeout(() => {
+      setPaymentCompleted(true)
+      setLoading(false)
+      setStep(4) // Переход к финальному рассмотрению
+    }, 2000)
   }
 
   // Эффект для автоматического перехода между шагами
@@ -290,20 +337,85 @@ function ApplicationPage() {
                 </p>
               </div>
 
-              {/* Stripe Payment Form */}
-              <div className="bg-gray-50 rounded-lg p-6 mb-6">
+              {/* Простая форма оплаты */}
+              <form onSubmit={handlePaymentSubmit} className="bg-gray-50 rounded-lg p-6 mb-6">
                 <h4 className="font-semibold text-gray-800 mb-4">Данные карты:</h4>
-                <StripePayment 
-                  onPaymentSuccess={handlePaymentSuccess}
-                  onPaymentError={handlePaymentError}
-                />
-              </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-semibold mb-2">
+                      Номер карты *
+                    </label>
+                    <input
+                      type="text"
+                      name="cardNumber"
+                      value={cardData.cardNumber}
+                      onChange={handleCardDataChange}
+                      placeholder="1234 5678 9012 3456"
+                      maxLength="19"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.cardNumber ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                    {errors.cardNumber && <p className="text-red-500 text-sm mt-1">{errors.cardNumber}</p>}
+                  </div>
 
-              {errors.payment && (
-                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-600">{errors.payment}</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-gray-700 text-sm font-semibold mb-2">
+                        Срок действия *
+                      </label>
+                      <input
+                        type="text"
+                        name="expiryDate"
+                        value={cardData.expiryDate}
+                        onChange={handleCardDataChange}
+                        placeholder="MM/YY"
+                        maxLength="5"
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.expiryDate ? 'border-red-500' : 'border-gray-300'}`}
+                      />
+                      {errors.expiryDate && <p className="text-red-500 text-sm mt-1">{errors.expiryDate}</p>}
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-700 text-sm font-semibold mb-2">
+                        CVV *
+                      </label>
+                      <input
+                        type="text"
+                        name="cvv"
+                        value={cardData.cvv}
+                        onChange={handleCardDataChange}
+                        placeholder="123"
+                        maxLength="4"
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.cvv ? 'border-red-500' : 'border-gray-300'}`}
+                      />
+                      {errors.cvv && <p className="text-red-500 text-sm mt-1">{errors.cvv}</p>}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 text-sm font-semibold mb-2">
+                      Имя держателя карты *
+                    </label>
+                    <input
+                      type="text"
+                      name="cardholderName"
+                      value={cardData.cardholderName}
+                      onChange={handleCardDataChange}
+                      placeholder="IVAN IVANOV"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.cardholderName ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                    {errors.cardholderName && <p className="text-red-500 text-sm mt-1">{errors.cardholderName}</p>}
+                  </div>
                 </div>
-              )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full mt-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-4 px-8 rounded-lg text-lg font-semibold transition"
+                >
+                  {loading ? 'Обработка платежа...' : 'Оплатить $1'}
+                </button>
+              </form>
             </div>
           </div>
         )}
