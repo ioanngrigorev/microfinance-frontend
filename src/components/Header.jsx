@@ -41,6 +41,12 @@ function Header() {
               Оформить займ
             </Link>
             <Link 
+              to="/personal-account" 
+              className={`px-4 py-2 rounded-lg text-white transition bg-yellow-500 hover:bg-yellow-600 ${isActive('/personal-account')}`}
+            >
+              Личный кабинет
+            </Link>
+            <Link 
               to="/admin" 
               className={`px-4 py-2 rounded-lg text-white transition bg-purple-500 hover:bg-purple-600 ${isActive('/admin')}`}
             >

@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 function ApplicationPage() {
   const location = useLocation()
@@ -8,8 +7,7 @@ function ApplicationPage() {
   
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [products, setProducts] = useState([])
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [decision, setDecision] = useState(null) // 'approved' or 'rejected'
   
   const [formData, setFormData] = useState({
     amount: location.state?.amount || 1000,
@@ -270,72 +268,21 @@ function ApplicationPage() {
     }
   }
 
-  const handleScoringComplete = () => {
-    // Моковые данные для демо
-    const mockProducts = [
-      {
-        id: 1,
-        name: 'Экспресс займ',
-        amount: formData.amount,
-        term: formData.termDays,
-        rate: 2.0,
-        totalAmount: (formData.amount * 1.6).toFixed(2),
-        sessionId: 'demo-session-123'
-      },
-      {
-        id: 2,
-        name: 'Стандарт',
-        amount: formData.amount,
-        term: formData.termDays,
-        rate: 1.8,
-        totalAmount: (formData.amount * 1.54).toFixed(2),
-        sessionId: 'demo-session-123'
-      },
-      {
-        id: 3,
-        name: 'Максимум',
-        amount: formData.amount,
-        term: formData.termDays,
-        rate: 1.5,
-        totalAmount: (formData.amount * 1.45).toFixed(2),
-        sessionId: 'demo-session-123'
-      }
-    ]
-    
-    setProducts(mockProducts)
-    setStep(3)
-  }
-
-  const handleProductSelect = (product) => {
-    setSelectedProduct(product)
-    setStep(4)
-  }
-
-  const validateStep3 = () => {
-    // Упрощенная валидация для демо
-    return true
-  }
-
-  const handleFinalSubmit = async (e) => {
-    e.preventDefault()
-    
-    if (!validateStep3()) {
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      // Моковая отправка для демо
-      setTimeout(() => {
-        setStep(5)
+  // Эффект для автоматического скоринга
+  useEffect(() => {
+    if (step === 2) {
+      setLoading(true)
+      const scoringTimer = setTimeout(() => {
+        // Имитация решения: 70% одобрено, 30% отказано
+        const isApproved = Math.random() < 0.7
+        setDecision(isApproved ? 'approved' : 'rejected')
         setLoading(false)
-      }, 1000)
-    } catch (error) {
-      setErrors({ submit: 'Ошибка при финальной отправке. Попробуйте позже.' })
-      setLoading(false)
+        setStep(3) // Переход к шагу результата
+      }, 3000) // 3 секунды на "скоринг"
+
+      return () => clearTimeout(scoringTimer)
     }
-  }
+  }, [step])
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -353,7 +300,7 @@ function ApplicationPage() {
               </div>
               <span className="ml-2 font-semibold hidden md:inline">Анкета</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-4 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
             <div className={`flex items-center ${step >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
@@ -361,29 +308,13 @@ function ApplicationPage() {
               </div>
               <span className="ml-2 font-semibold hidden md:inline">Скоринг</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-4 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
-            <div className={`flex items-center ${step >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
-                3
-              </div>
-              <span className="ml-2 font-semibold hidden md:inline">Продукты</span>
-            </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 4 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-            
-            <div className={`flex items-center ${step >= 4 ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 4 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
-                4
-              </div>
-              <span className="ml-2 font-semibold hidden md:inline">Верификация</span>
-            </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 5 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-            
-            <div className={`flex items-center ${step >= 5 ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 5 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
                 ✓
               </div>
-              <span className="ml-2 font-semibold hidden md:inline">Готово</span>
+              <span className="ml-2 font-semibold hidden md:inline">Результат</span>
             </div>
           </div>
         </div>
@@ -493,29 +424,23 @@ function ApplicationPage() {
             <div className="bg-blue-50 rounded-lg p-6 mb-8">
               <h3 className="text-xl font-semibold text-blue-800 mb-4">Проверяем:</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Кредитная история</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Кредитная история
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Доходы и расходы</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Доходы и расходы
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Банковские данные</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Банковские данные
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Скоринг-модель</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Скоринг-модель
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Риск-анализ</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Риск-анализ
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                  <span>Подбор продуктов</span>
+                <div className="flex items-center text-gray-700">
+                  <span className="text-green-500 mr-2">✔</span> Подбор продуктов
                 </div>
               </div>
             </div>
@@ -527,221 +452,46 @@ function ApplicationPage() {
               <p className="text-gray-600">Анализ завершен на 75%</p>
             </div>
 
-            <button
-              onClick={handleScoringComplete}
-              className="bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-lg text-lg font-semibold transition"
-            >
-              Продолжить к продуктам →
-            </button>
+            {loading && (
+              <p className="text-blue-600 font-semibold text-lg">Принимаем решение...</p>
+            )}
           </div>
         )}
 
-        {/* Step 3: Выбор продукта */}
+        {/* Step 3: Результат */}
         {step === 3 && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 3: Выберите продукт</h2>
-            <p className="text-gray-600 mb-6">На основе вашей заявки мы подобрали следующие варианты:</p>
-            
-            <div className="space-y-4">
-              {products.length > 0 ? (
-                products.map((product, index) => (
-                  <div
-                    key={index}
-                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 cursor-pointer transition"
-                    onClick={() => handleProductSelect(product)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800">{product.name || `Продукт ${index + 1}`}</h3>
-                        <p className="text-gray-600 mt-2">
-                          Сумма: ${product.amount} | Срок: {product.term} дней | Ставка: {product.rate}%
-                        </p>
-                        <p className="text-lg font-semibold text-green-600 mt-2">
-                          К возврату: ${product.totalAmount}
-                        </p>
-                      </div>
-                      <div className="text-3xl">→</div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">Генерируем продукты...</p>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={() => setStep(1)}
-              className="mt-6 w-full bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 rounded-lg font-semibold transition"
-            >
-              ← Назад
-            </button>
-          </div>
-        )}
-
-        {/* Step 4: Верификация */}
-        {step === 4 && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 4: Верификация счета</h2>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-              <p className="text-yellow-800">
-                ⚠️ Для верификации вашего банковского счета с него будет списана сумма $1. 
-                Эта сумма будет зачтена в счет погашения займа.
-              </p>
-            </div>
-
-            <form onSubmit={handleFinalSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Имя *
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.firstName ? 'border-red-500' : 'border-gray-300'}`}
-                    required
-                  />
-                  {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Фамилия *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.lastName ? 'border-red-500' : 'border-gray-300'}`}
-                    required
-                  />
-                  {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your@email.com"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                  required
-                />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Страна *
-                </label>
-                <select
-                  name="country"
-                  value={formData.country}
-                  onChange={handleCountryChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.country ? 'border-red-500' : 'border-gray-300'}`}
-                  required
-                >
-                  {Object.entries(countriesAndBanks).map(([code, data]) => (
-                    <option key={code} value={code}>
-                      {data.name}
-                    </option>
-                  ))}
-                </select>
-                {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Название банка *
-                </label>
-                <select
-                  name="bankName"
-                  value={formData.bankName}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.bankName ? 'border-red-500' : 'border-gray-300'}`}
-                  required
-                >
-                  {countriesAndBanks[formData.country]?.banks.map((bank, index) => (
-                    <option key={index} value={bank}>
-                      {bank}
-                    </option>
-                  ))}
-                </select>
-                {errors.bankName && <p className="text-red-500 text-sm mt-1">{errors.bankName}</p>}
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Номер счета *
-                </label>
-                <input
-                  type="text"
-                  name="accountNumber"
-                  value={formData.accountNumber}
-                  onChange={handleChange}
-                  placeholder="1234567890"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.accountNumber ? 'border-red-500' : 'border-gray-300'}`}
-                  required
-                />
-                {errors.accountNumber && <p className="text-red-500 text-sm mt-1">{errors.accountNumber}</p>}
-              </div>
-
-              {errors.submit && (
-                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-600">{errors.submit}</p>
-                </div>
-              )}
-
-              <div className="flex gap-4">
+          <div className="bg-white p-8 rounded-2xl shadow-xl text-center">
+            {decision === 'approved' ? (
+              <>
+                <div className="text-green-500 text-7xl mb-6">🎉</div>
+                <h3 className="text-3xl font-bold text-gray-800 mb-4">Заявка одобрена!</h3>
+                <p className="text-gray-600 text-lg mb-8">
+                  Поздравляем! Ваша заявка на займ успешно одобрена.
+                  Перейдите в личный кабинет для управления вашими займами.
+                </p>
                 <button
-                  type="button"
-                  onClick={() => setStep(3)}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-4 rounded-lg font-semibold transition"
+                  onClick={() => navigate('/personal-account')}
+                  className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
                 >
-                  ← Назад
+                  Перейти в личный кабинет
                 </button>
+              </>
+            ) : (
+              <>
+                <div className="text-red-500 text-7xl mb-6">❌</div>
+                <h3 className="text-3xl font-bold text-gray-800 mb-4">Заявка отклонена</h3>
+                <p className="text-gray-600 text-lg mb-8">
+                  К сожалению, ваша заявка на займ была отклонена.
+                  Вы можете попробовать подать заявку снова позже.
+                </p>
                 <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg text-lg font-semibold transition disabled:opacity-50"
+                  onClick={() => setStep(1)}
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
                 >
-                  {loading ? 'Обработка...' : 'Подтвердить'}
+                  Подать новую заявку
                 </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {/* Step 5: Успех */}
-        {step === 5 && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8 text-center">
-            <div className="text-6xl mb-6">🎉</div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Заявка успешно отправлена!</h2>
-            <p className="text-lg text-gray-600 mb-6">
-              Мы обработаем вашу заявку в течение 5-10 минут. 
-              Деньги поступят на ваш счет после верификации.
-            </p>
-            <div className="bg-blue-50 rounded-lg p-6 mb-6">
-              <p className="text-gray-700">
-                Мы отправили подтверждение на ваш email: <strong>{formData.email}</strong>
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition"
-            >
-              Вернуться на главную
-            </button>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -750,5 +500,3 @@ function ApplicationPage() {
 }
 
 export default ApplicationPage
-
-
