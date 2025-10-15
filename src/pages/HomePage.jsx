@@ -4,8 +4,8 @@ import { useState } from 'react'
 function HomePage() {
   const [amount, setAmount] = useState(1000)
   const [term, setTerm] = useState(30)
-  const [phoneNumber, setPhoneNumber] = useState('+1 (555) 123-4567')
-  const [email, setEmail] = useState('user@example.com')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
   const [loanPurpose, setLoanPurpose] = useState('Покупка товаров и услуг')
   const interestRate = 2.0 // 2% в день
 
@@ -82,7 +82,7 @@ function HomePage() {
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm text-gray-900 placeholder-gray-500"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
@@ -95,7 +95,7 @@ function HomePage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm text-gray-900 placeholder-gray-500"
                   placeholder="user@example.com"
                 />
               </div>
@@ -107,20 +107,20 @@ function HomePage() {
                 <select
                   value={loanPurpose}
                   onChange={(e) => setLoanPurpose(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm text-gray-900"
                 >
-                  <option value="Покупка товаров и услуг">🛒 Покупка товаров и услуг</option>
-                  <option value="Медицинские расходы">🏥 Медицинские расходы</option>
-                  <option value="Образование">🎓 Образование</option>
-                  <option value="Ремонт дома/квартиры">🏠 Ремонт дома/квартиры</option>
-                  <option value="Покупка автомобиля">🚗 Покупка автомобиля</option>
-                  <option value="Свадьба">💒 Свадьба</option>
-                  <option value="Отпуск/путешествие">✈️ Отпуск/путешествие</option>
-                  <option value="Бизнес-нужды">💼 Бизнес-нужды</option>
-                  <option value="Погашение других долгов">💳 Погашение других долгов</option>
-                  <option value="Непредвиденные расходы">⚡ Непредвиденные расходы</option>
-                  <option value="Покупка техники">📱 Покупка техники</option>
-                  <option value="Другое">📝 Другое</option>
+                  <option value="Покупка товаров и услуг">Покупка товаров и услуг</option>
+                  <option value="Медицинские расходы">Медицинские расходы</option>
+                  <option value="Образование">Образование</option>
+                  <option value="Ремонт дома/квартиры">Ремонт дома/квартиры</option>
+                  <option value="Покупка автомобиля">Покупка автомобиля</option>
+                  <option value="Свадьба">Свадьба</option>
+                  <option value="Отпуск/путешествие">Отпуск/путешествие</option>
+                  <option value="Бизнес-нужды">Бизнес-нужды</option>
+                  <option value="Погашение других долгов">Погашение других долгов</option>
+                  <option value="Непредвиденные расходы">Непредвиденные расходы</option>
+                  <option value="Покупка техники">Покупка техники</option>
+                  <option value="Другое">Другое</option>
                 </select>
               </div>
             </div>
