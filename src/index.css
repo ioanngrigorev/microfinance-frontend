@@ -33,15 +33,15 @@ body {
 /* Fallback for browsers that don't support pseudo-elements */
 input[type="range"] {
   background: #059669 !important;
-  height: 16px;
-  border-radius: 8px;
+  height: 32px;
+  border-radius: 16px;
   border: none;
 }
 
 .slider::-webkit-slider-track {
   background: #059669 !important;
-  height: 16px;
-  border-radius: 8px;
+  height: 32px;
+  border-radius: 16px;
   border: none;
 }
 
@@ -63,8 +63,8 @@ input[type="range"] {
 
 .slider::-moz-range-track {
   background: #059669 !important;
-  height: 16px;
-  border-radius: 8px;
+  height: 32px;
+  border-radius: 16px;
   border: none;
 }
 

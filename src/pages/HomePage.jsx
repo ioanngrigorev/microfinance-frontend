@@ -78,26 +78,36 @@ function HomePage() {
                 <label className="block text-gray-600 text-sm font-medium mb-3">
                   Номер телефона
                 </label>
-                <input
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
-                  placeholder="+1 (555) 123-4567"
-                />
+                <div className="flex items-center">
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="flex-1 text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                  <div className="ml-4 text-gray-500">
+                    📱
+                  </div>
+                </div>
               </div>
 
               <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
                 <label className="block text-gray-600 text-sm font-medium mb-3">
                   Email
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
-                  placeholder="user@example.com"
-                />
+                <div className="flex items-center">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 text-2xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-400"
+                    placeholder="user@example.com"
+                  />
+                  <div className="ml-4 text-gray-500">
+                    📧
+                  </div>
+                </div>
               </div>
 
               <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
