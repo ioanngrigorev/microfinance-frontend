@@ -8,6 +8,7 @@ function ApplicationPage() {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [decision, setDecision] = useState(null) // 'approved' or 'rejected'
+  const [selectedProduct, setSelectedProduct] = useState(null)
   
   const [formData, setFormData] = useState({
     amount: location.state?.amount || 1000,
@@ -284,6 +285,16 @@ function ApplicationPage() {
     }
   }, [step])
 
+  const handleProductSelect = (product) => {
+    setSelectedProduct(product)
+    navigate('/crypto-account', { 
+      state: { 
+        product, 
+        formData 
+      } 
+    })
+  }
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-3xl mx-auto">
@@ -467,14 +478,86 @@ function ApplicationPage() {
                 <h3 className="text-3xl font-bold text-gray-800 mb-4">Заявка одобрена!</h3>
                 <p className="text-gray-600 text-lg mb-8">
                   Поздравляем! Ваша заявка на займ успешно одобрена.
-                  Перейдите в личный кабинет для управления вашими займами.
+                  Выберите один из предложенных продуктов:
                 </p>
-                <button
-                  onClick={() => navigate('/personal-account')}
-                  className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
-                >
-                  Перейти в личный кабинет
-                </button>
+
+                {/* Продукты */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 1,
+                      name: 'Экспресс займ',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 2.0,
+                      totalAmount: (formData.amount * 1.6).toFixed(2),
+                      description: 'Быстрое одобрение, минимальные требования'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-blue-800 mb-3">Экспресс займ</h4>
+                    <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
+                      <p><span className="font-semibold">Ставка:</span> 2.0% в день</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.6).toFixed(2)}</p>
+                    </div>
+                    <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-semibold transition">
+                      Выбрать
+                    </button>
+                  </div>
+
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-green-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 2,
+                      name: 'Стандарт',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 1.8,
+                      totalAmount: (formData.amount * 1.54).toFixed(2),
+                      description: 'Оптимальные условия, подходит для большинства'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-green-800 mb-3">Стандарт</h4>
+                    <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
+                      <p><span className="font-semibold">Ставка:</span> 1.8% в день</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.54).toFixed(2)}</p>
+                    </div>
+                    <button className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg text-sm font-semibold transition">
+                      Выбрать
+                    </button>
+                  </div>
+
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-purple-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 3,
+                      name: 'Максимум',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 1.5,
+                      totalAmount: (formData.amount * 1.45).toFixed(2),
+                      description: 'Выгодные условия для постоянных клиентов'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-purple-800 mb-3">Максимум</h4>
+                    <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
+                      <p><span className="font-semibold">Ставка:</span> 1.5% в день</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.45).toFixed(2)}</p>
+                    </div>
+                    <button className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-sm font-semibold transition">
+                      Выбрать
+                    </button>
+                  </div>
+                </div>
               </>
             ) : (
               <>

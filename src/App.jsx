@@ -7,6 +7,7 @@ import ProductsPage from './pages/ProductsPage'
 import ApplicationPage from './pages/ApplicationPage'
 import AdminPage from './pages/AdminPage'
 import PersonalAccountPage from './pages/PersonalAccountPage'
+import CryptoAccountPage from './pages/CryptoAccountPage'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/application" element={<ApplicationPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/personal-account" element={<PersonalAccountPage />} />
+          <Route path="/crypto-account" element={<CryptoAccountPage />} />
         </Routes>
       </main>
       <Footer />
