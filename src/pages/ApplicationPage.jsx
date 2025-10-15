@@ -19,11 +19,211 @@ function ApplicationPage() {
     firstName: 'Иван',
     lastName: 'Иванов',
     email: 'ivan@example.com',
+    country: 'US',
     bankName: 'Bank of America',
     accountNumber: '1234567890'
   })
 
   const [errors, setErrors] = useState({})
+
+  // Данные о странах и банках
+  const countriesAndBanks = {
+    'US': {
+      name: '🇺🇸 США',
+      banks: [
+        'Bank of America',
+        'JPMorgan Chase',
+        'Wells Fargo',
+        'Citibank',
+        'US Bank',
+        'PNC Bank',
+        'Capital One',
+        'TD Bank',
+        'HSBC Bank USA',
+        'Regions Bank'
+      ]
+    },
+    'RU': {
+      name: '🇷🇺 Россия',
+      banks: [
+        'Сбербанк',
+        'ВТБ',
+        'Альфа-Банк',
+        'Газпромбанк',
+        'Райффайзенбанк',
+        'Тинькофф Банк',
+        'Россельхозбанк',
+        'Почта Банк',
+        'ЮниКредит Банк',
+        'Росбанк'
+      ]
+    },
+    'DE': {
+      name: '🇩🇪 Германия',
+      banks: [
+        'Deutsche Bank',
+        'Commerzbank',
+        'HypoVereinsbank',
+        'Sparkasse',
+        'Volksbank',
+        'Postbank',
+        'ING-DiBa',
+        'DKB',
+        'Consorsbank',
+        'Targobank'
+      ]
+    },
+    'GB': {
+      name: '🇬🇧 Великобритания',
+      banks: [
+        'HSBC',
+        'Barclays',
+        'Lloyds Bank',
+        'NatWest',
+        'Santander UK',
+        'Nationwide',
+        'TSB',
+        'Halifax',
+        'First Direct',
+        'Metro Bank'
+      ]
+    },
+    'FR': {
+      name: '🇫🇷 Франция',
+      banks: [
+        'BNP Paribas',
+        'Crédit Agricole',
+        'Société Générale',
+        'Crédit Mutuel',
+        'La Banque Postale',
+        'LCL',
+        'HSBC France',
+        'CIC',
+        'Banque Populaire',
+        'Crédit du Nord'
+      ]
+    },
+    'IT': {
+      name: '🇮🇹 Италия',
+      banks: [
+        'Intesa Sanpaolo',
+        'UniCredit',
+        'Banco BPM',
+        'Banca Popolare di Sondrio',
+        'Banca Sella',
+        'Monte dei Paschi di Siena',
+        'Banca Popolare di Milano',
+        'UBI Banca',
+        'Banca Nazionale del Lavoro',
+        'Credito Emiliano'
+      ]
+    },
+    'ES': {
+      name: '🇪🇸 Испания',
+      banks: [
+        'Santander',
+        'BBVA',
+        'CaixaBank',
+        'Bankia',
+        'Sabadell',
+        'Unicaja',
+        'Ibercaja',
+        'Abanca',
+        'Kutxabank',
+        'Liberbank'
+      ]
+    },
+    'CA': {
+      name: '🇨🇦 Канада',
+      banks: [
+        'Royal Bank of Canada',
+        'TD Canada Trust',
+        'Scotiabank',
+        'Bank of Montreal',
+        'CIBC',
+        'National Bank of Canada',
+        'Desjardins',
+        'HSBC Bank Canada',
+        'Tangerine',
+        'PC Financial'
+      ]
+    },
+    'AU': {
+      name: '🇦🇺 Австралия',
+      banks: [
+        'Commonwealth Bank',
+        'Westpac',
+        'ANZ',
+        'National Australia Bank',
+        'Bendigo Bank',
+        'Suncorp Bank',
+        'Bank of Queensland',
+        'ING Australia',
+        'Macquarie Bank',
+        'St.George Bank'
+      ]
+    },
+    'JP': {
+      name: '🇯🇵 Япония',
+      banks: [
+        'MUFG Bank',
+        'Mizuho Bank',
+        'Sumitomo Mitsui Banking',
+        'Resona Bank',
+        'Saitama Resona Bank',
+        'Shizuoka Bank',
+        'Hokuriku Bank',
+        'Chiba Bank',
+        'Bank of Yokohama',
+        'Shinwa Bank'
+      ]
+    },
+    'CN': {
+      name: '🇨🇳 Китай',
+      banks: [
+        'Industrial and Commercial Bank of China',
+        'China Construction Bank',
+        'Agricultural Bank of China',
+        'Bank of China',
+        'Bank of Communications',
+        'China Merchants Bank',
+        'China Minsheng Bank',
+        'China Everbright Bank',
+        'Ping An Bank',
+        'China Citic Bank'
+      ]
+    },
+    'IN': {
+      name: '🇮🇳 Индия',
+      banks: [
+        'State Bank of India',
+        'HDFC Bank',
+        'ICICI Bank',
+        'Axis Bank',
+        'Kotak Mahindra Bank',
+        'Punjab National Bank',
+        'Bank of Baroda',
+        'Canara Bank',
+        'Union Bank of India',
+        'Indian Bank'
+      ]
+    },
+    'BR': {
+      name: '🇧🇷 Бразилия',
+      banks: [
+        'Banco do Brasil',
+        'Caixa Econômica Federal',
+        'Bradesco',
+        'Itaú Unibanco',
+        'Santander Brasil',
+        'Banco Safra',
+        'Banco Votorantim',
+        'Banco Inter',
+        'Nubank',
+        'Banco Original'
+      ]
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -35,6 +235,15 @@ function ApplicationPage() {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
+  }
+
+  const handleCountryChange = (e) => {
+    const countryCode = e.target.value
+    setFormData(prev => ({
+      ...prev,
+      country: countryCode,
+      bankName: countriesAndBanks[countryCode]?.banks[0] || ''
+    }))
   }
 
   const validateStep1 = () => {
@@ -374,17 +583,41 @@ function ApplicationPage() {
 
               <div className="mb-6">
                 <label className="block text-gray-700 font-semibold mb-2">
+                  Страна *
+                </label>
+                <select
+                  name="country"
+                  value={formData.country}
+                  onChange={handleCountryChange}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.country ? 'border-red-500' : 'border-gray-300'}`}
+                  required
+                >
+                  {Object.entries(countriesAndBanks).map(([code, data]) => (
+                    <option key={code} value={code}>
+                      {data.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
                   Название банка *
                 </label>
-                <input
-                  type="text"
+                <select
                   name="bankName"
                   value={formData.bankName}
                   onChange={handleChange}
-                  placeholder="Bank of America"
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.bankName ? 'border-red-500' : 'border-gray-300'}`}
                   required
-                />
+                >
+                  {countriesAndBanks[formData.country]?.banks.map((bank, index) => (
+                    <option key={index} value={bank}>
+                      {bank}
+                    </option>
+                  ))}
+                </select>
                 {errors.bankName && <p className="text-red-500 text-sm mt-1">{errors.bankName}</p>}
               </div>
 
