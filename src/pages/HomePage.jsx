@@ -26,14 +26,46 @@ function HomePage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 py-16">
 
-        {/* Кредитный калькулятор */}
+        {/* Hero Section */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl mb-16">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="relative px-12 py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                Кредиты в стейблкоинах
+                <br />
+                <span className="text-blue-200">для всех национальностей</span>
+              </h1>
+              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Получите мгновенный доступ к кредитам в USDT, USDC и других стейблкоинах. 
+                Без границ, без ограничений по гражданству. Финансовая свобода для каждого.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex items-center space-x-2 text-white/80">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span>Мгновенное одобрение</span>
+                </div>
+                <div className="flex items-center space-x-2 text-white/80">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span>Без проверки кредитной истории</span>
+                </div>
+                <div className="flex items-center space-x-2 text-white/80">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span>Доступно в любой стране</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Калькулятор */}
         <div className="bg-white rounded-3xl p-12 mb-16 shadow-xl border border-gray-100">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Кредитный калькулятор
-            </h1>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Рассчитайте ваш займ
+            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Рассчитайте условия займа за несколько секунд
+              Узнайте условия кредита в стейблкоинах за несколько секунд
             </p>
           </div>
         
