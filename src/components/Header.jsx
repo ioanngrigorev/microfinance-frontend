@@ -4,18 +4,18 @@ function Header() {
   const location = useLocation()
 
   const isActive = (path) => {
-    return location.pathname === path ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'
+    return location.pathname === path ? 'text-purple-600 bg-purple-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
   }
 
   return (
-    <header className="bg-black/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform">
               💰
             </div>
-            <span className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+            <span className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
               МикроФинанс
             </span>
           </Link>
@@ -44,7 +44,7 @@ function Header() {
           <div className="flex items-center space-x-3">
             <Link 
               to="/application" 
-              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-green-500/25 hover:scale-105"
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
             >
               Оформить займ
             </Link>
