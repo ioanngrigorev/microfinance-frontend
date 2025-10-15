@@ -5,8 +5,9 @@ function ApplicationPage() {
   const location = useLocation()
   const navigate = useNavigate()
   
-  const [step, setStep] = useState(1) // 1: Ожидание, 2: Предодобрение, 3: Оплата, 4: Рассмотрение
-  const [loading, setLoading] = useState(false)
+  const [step, setStep] = useState(1) // 1: Анализ и предодобрение, 2: Оплата, 3: Рассмотрение
+  const [loading, setLoading] = useState(true)
+  const [analysisProgress, setAnalysisProgress] = useState(0)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [paymentCompleted, setPaymentCompleted] = useState(false)
   const [finalDecision, setFinalDecision] = useState(null) // 'approved' or 'rejected'
@@ -30,7 +31,7 @@ function ApplicationPage() {
 
   const handleProductSelect = (product) => {
     setSelectedProduct(product)
-    setStep(3) // Переход к оплате
+    setStep(2) // Переход к оплате
   }
 
   const handleCardDataChange = (e) => {
@@ -63,7 +64,7 @@ function ApplicationPage() {
     if (!cardData.cardholderName || cardData.cardholderName.length < 2) {
       newErrors.cardholderName = 'Введите имя держателя карты'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -76,27 +77,32 @@ function ApplicationPage() {
     }
 
     setLoading(true)
-    
+
     // Имитация обработки платежа
-    setTimeout(() => {
-      setPaymentCompleted(true)
+        setTimeout(() => {
+          setPaymentCompleted(true)
       setLoading(false)
-      setStep(4) // Переход к финальному рассмотрению
-    }, 2000)
+          setStep(3) // Переход к финальному рассмотрению
+        }, 2000)
   }
 
   // Эффект для автоматического перехода между шагами
   useEffect(() => {
     if (step === 1) {
-      // Автоматический переход к предодобрению через 3 секунды
-      setLoading(true)
-      const preapprovalTimer = setTimeout(() => {
-        setLoading(false)
-        setStep(2) // Переход к предодобрению
-      }, 3000)
+      // Анимация прогресса анализа
+      const progressInterval = setInterval(() => {
+        setAnalysisProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(progressInterval)
+            setLoading(false)
+            return 100
+          }
+          return prev + 2
+        })
+      }, 50)
 
-      return () => clearTimeout(preapprovalTimer)
-    } else if (step === 4) {
+      return () => clearInterval(progressInterval)
+    } else if (step === 3) {
       // Финальное рассмотрение
     setLoading(true)
       const decisionTimer = setTimeout(() => {
@@ -104,7 +110,7 @@ function ApplicationPage() {
         const isApproved = Math.random() < 0.7
         setFinalDecision(isApproved ? 'approved' : 'rejected')
       setLoading(false)
-        setStep(5) // Переход к финальному результату
+        setStep(4) // Переход к финальному результату
       }, 5000) // 5 секунд на "принятие решения"
 
       return () => clearTimeout(decisionTimer)
@@ -125,7 +131,7 @@ function ApplicationPage() {
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
                 1
               </div>
-              <span className="ml-1 font-semibold hidden lg:inline text-xs">Ожидание</span>
+              <span className="ml-1 font-semibold hidden lg:inline text-xs">Анализ</span>
             </div>
             <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
@@ -133,20 +139,12 @@ function ApplicationPage() {
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
                 2
               </div>
-              <span className="ml-1 font-semibold hidden lg:inline text-xs">Предодобрение</span>
-            </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-            
-            <div className={`flex items-center ${step >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
-                3
-              </div>
               <span className="ml-1 font-semibold hidden lg:inline text-xs">Оплата</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 4 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-green-600' : 'bg-gray-300'}`}></div>
             
-            <div className={`flex items-center ${step >= 4 ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 4 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
                 ✓
               </div>
               <span className="ml-1 font-semibold hidden lg:inline text-xs">Рассмотрение</span>
@@ -154,157 +152,150 @@ function ApplicationPage() {
           </div>
         </div>
 
-        {/* Step 1: Ожидание решения */}
+        {/* Step 1: Анализ и предодобрение */}
         {step === 1 && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8 text-center">
-            <div className="mb-8">
-              <div className="text-6xl mb-4">⏳</div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">Анализ вашей заявки</h2>
-              <p className="text-gray-600 text-lg">
-                Система принятия решений анализирует ваши данные...
-              </p>
-            </div>
-
-            {/* Отображение данных из калькулятора */}
-            <div className="bg-blue-50 rounded-lg p-6 mb-8">
-              <h4 className="font-semibold text-blue-800 mb-4">Ваши параметры займа:</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div><span className="font-medium">Сумма:</span> ${formData.amount}</div>
-                <div><span className="font-medium">Срок:</span> {formData.termDays} дней</div>
-                <div><span className="font-medium">Телефон:</span> {formData.phoneNumber}</div>
-                <div><span className="font-medium">Email:</span> {formData.email}</div>
-                <div className="col-span-2"><span className="font-medium">Цель:</span> {formData.loanPurpose}</div>
-              </div>
-            </div>
-
-            <div className="bg-blue-50 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-blue-800 mb-4">Проверяем:</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Кредитная история
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Доходы и расходы
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Банковские данные
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Скоринг-модель
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Риск-анализ
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <span className="text-green-500 mr-2">✔</span> Финальная проверка
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <div className="bg-gray-200 rounded-full h-3 mb-4">
-                <div className="bg-blue-600 h-3 rounded-full animate-pulse" style={{width: '90%'}}></div>
-              </div>
-              <p className="text-gray-600">Анализ завершен на 90%</p>
-            </div>
-
-            {loading && (
-              <p className="text-blue-600 font-semibold text-lg">Принимаем предварительное решение...</p>
-            )}
-          </div>
-        )}
-
-        {/* Step 2: Предодобрение */}
-        {step === 2 && (
           <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Предварительное одобрение!</h2>
-            <p className="text-gray-600 text-center mb-8">
-              🎉 Поздравляем! Система принятия решений предварительно одобрила вашу заявку.
-              Выберите один из предложенных продуктов:
-            </p>
-
-            {/* Продукты */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div 
-                className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 cursor-pointer transition transform hover:scale-105"
-                onClick={() => handleProductSelect({
-                  id: 1,
-                  name: 'Экспресс займ',
-                  amount: formData.amount,
-                  term: formData.termDays,
-                  rate: 2.0,
-                  totalAmount: (formData.amount * 1.6).toFixed(2),
-                  description: 'Быстрое одобрение, минимальные требования'
-                })}
-              >
-                <h4 className="text-xl font-bold text-blue-800 mb-3">Экспресс займ</h4>
-                <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                  <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
-                  <p><span className="font-semibold">Ставка:</span> 2.0% в день</p>
-                  <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.6).toFixed(2)}</p>
+            {loading ? (
+              // Фаза анализа
+              <div className="text-center">
+                <div className="mb-8">
+                  <div className="text-6xl mb-4">⏳</div>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">Анализ вашей заявки</h2>
+                  <p className="text-gray-600 text-lg">
+                    Система принятия решений анализирует ваши данные...
+                  </p>
                 </div>
-                <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-semibold transition">
-                  Выбрать
-                </button>
+
+                {/* Отображение данных из калькулятора */}
+                <div className="bg-blue-50 rounded-lg p-6 mb-8">
+                  <h4 className="font-semibold text-blue-800 mb-4">Ваши параметры займа:</h4>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div><span className="font-medium">Сумма:</span> ${formData.amount}</div>
+                    <div><span className="font-medium">Срок:</span> {formData.termDays} месяцев</div>
+                    <div><span className="font-medium">Телефон:</span> {formData.phoneNumber}</div>
+                    <div><span className="font-medium">Email:</span> {formData.email}</div>
+                    <div className="col-span-2"><span className="font-medium">Цель:</span> {formData.loanPurpose}</div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 rounded-lg p-6 mb-8">
+                  <h3 className="text-xl font-semibold text-blue-800 mb-4">Проверяем:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Кредитная история
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Доходы и расходы
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Банковские данные
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Скоринг-модель
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Риск-анализ
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                      <span className="text-green-500 mr-2">✔</span> Финальная проверка
+                    </div>
+                </div>
               </div>
 
-              <div 
-                className="border-2 border-gray-200 rounded-lg p-6 hover:border-green-500 cursor-pointer transition transform hover:scale-105"
-                onClick={() => handleProductSelect({
-                  id: 2,
-                  name: 'Стандарт',
-                  amount: formData.amount,
-                  term: formData.termDays,
-                  rate: 1.8,
-                  totalAmount: (formData.amount * 1.54).toFixed(2),
-                  description: 'Оптимальные условия, подходит для большинства'
-                })}
-              >
-                <h4 className="text-xl font-bold text-green-800 mb-3">Стандарт</h4>
-                <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                  <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
-                  <p><span className="font-semibold">Ставка:</span> 1.8% в день</p>
-                  <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.54).toFixed(2)}</p>
-                </div>
-                <button className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg text-sm font-semibold transition">
-                  Выбрать
-                </button>
+                <div className="mb-8">
+                  <div className="bg-gray-200 rounded-full h-3 mb-4">
+                    <div className="bg-blue-600 h-3 rounded-full transition-all duration-300" style={{width: `${analysisProgress}%`}}></div>
+                  </div>
+                  <p className="text-gray-600">Анализ завершен на {analysisProgress}%</p>
               </div>
 
-              <div 
-                className="border-2 border-gray-200 rounded-lg p-6 hover:border-purple-500 cursor-pointer transition transform hover:scale-105"
-                onClick={() => handleProductSelect({
-                  id: 3,
-                  name: 'Максимум',
-                  amount: formData.amount,
-                  term: formData.termDays,
-                  rate: 1.5,
-                  totalAmount: (formData.amount * 1.45).toFixed(2),
-                  description: 'Выгодные условия для постоянных клиентов'
-                })}
-              >
-                <h4 className="text-xl font-bold text-purple-800 mb-3">Максимум</h4>
-                <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                  <p><span className="font-semibold">Срок:</span> {formData.termDays} дней</p>
-                  <p><span className="font-semibold">Ставка:</span> 1.5% в день</p>
-                  <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.45).toFixed(2)}</p>
-                </div>
-                <button className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-sm font-semibold transition">
-                  Выбрать
-                </button>
+                <p className="text-blue-600 font-semibold text-lg">Принимаем предварительное решение...</p>
               </div>
-            </div>
+            ) : (
+              // Фаза предодобрения
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Предварительное одобрение!</h2>
+                <p className="text-gray-600 text-center mb-8">
+                  🎉 Поздравляем! Система принятия решений предварительно одобрила вашу заявку.
+                  Выберите один из предложенных продуктов:
+                </p>
+
+                {/* Продукты */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 1,
+                      name: 'Экспресс займ',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 2.0,
+                      totalAmount: (formData.amount * 1.6).toFixed(2),
+                      description: 'Быстрое одобрение, минимальные требования'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-blue-800 mb-3">Экспресс займ</h4>
+                    <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
+                      <p><span className="font-semibold">Ставка:</span> 2.0% в месяц</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.6).toFixed(2)}</p>
+                    </div>
+                  </div>
+
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-green-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 2,
+                      name: 'Стандартный займ',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 1.8,
+                      totalAmount: (formData.amount * 1.5).toFixed(2),
+                      description: 'Оптимальные условия, подходит для большинства'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-green-800 mb-3">Стандартный займ</h4>
+                    <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
+                      <p><span className="font-semibold">Ставка:</span> 1.8% в месяц</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.5).toFixed(2)}</p>
+                    </div>
+              </div>
+
+                  <div 
+                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-purple-500 cursor-pointer transition transform hover:scale-105"
+                    onClick={() => handleProductSelect({
+                      id: 3,
+                      name: 'Премиум займ',
+                      amount: formData.amount,
+                      term: formData.termDays,
+                      rate: 1.5,
+                      totalAmount: (formData.amount * 1.4).toFixed(2),
+                      description: 'Выгодные условия для постоянных клиентов'
+                    })}
+                  >
+                    <h4 className="text-xl font-bold text-purple-800 mb-3">Премиум займ</h4>
+                    <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
+                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
+                      <p><span className="font-semibold">Ставка:</span> 1.5% в месяц</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.4).toFixed(2)}</p>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              )}
           </div>
         )}
 
-        {/* Step 3: Оплата */}
-        {step === 3 && selectedProduct && (
+
+        {/* Step 2: Оплата */}
+        {step === 2 && selectedProduct && (
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Оплата за создание крипто-счета</h2>
             
@@ -334,20 +325,20 @@ function ApplicationPage() {
                 </p>
                 <p className="text-blue-800">
                   <strong>Назначение:</strong> Создание крипто-счета для получения займа
-                </p>
-              </div>
+              </p>
+            </div>
 
               {/* Простая форма оплаты */}
               <form onSubmit={handlePaymentSubmit} className="bg-gray-50 rounded-lg p-6 mb-6">
                 <h4 className="font-semibold text-gray-800 mb-4">Данные карты:</h4>
                 
                 <div className="space-y-4">
-                  <div>
+                <div>
                     <label className="block text-gray-700 text-sm font-semibold mb-2">
                       Номер карты *
-                    </label>
-                    <input
-                      type="text"
+                  </label>
+                  <input
+                    type="text"
                       name="cardNumber"
                       value={cardData.cardNumber}
                       onChange={handleCardDataChange}
@@ -356,15 +347,15 @@ function ApplicationPage() {
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.cardNumber ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {errors.cardNumber && <p className="text-red-500 text-sm mt-1">{errors.cardNumber}</p>}
-                  </div>
+                </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
+                <div>
                       <label className="block text-gray-700 text-sm font-semibold mb-2">
                         Срок действия *
-                      </label>
-                      <input
-                        type="text"
+                  </label>
+                  <input
+                    type="text"
                         name="expiryDate"
                         value={cardData.expiryDate}
                         onChange={handleCardDataChange}
@@ -373,14 +364,14 @@ function ApplicationPage() {
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.expiryDate ? 'border-red-500' : 'border-gray-300'}`}
                       />
                       {errors.expiryDate && <p className="text-red-500 text-sm mt-1">{errors.expiryDate}</p>}
-                    </div>
+              </div>
 
                     <div>
                       <label className="block text-gray-700 text-sm font-semibold mb-2">
                         CVV *
-                      </label>
-                      <input
-                        type="text"
+                </label>
+                <input
+                  type="text"
                         name="cvv"
                         value={cardData.cvv}
                         onChange={handleCardDataChange}
@@ -390,14 +381,14 @@ function ApplicationPage() {
                       />
                       {errors.cvv && <p className="text-red-500 text-sm mt-1">{errors.cvv}</p>}
                     </div>
-                  </div>
+              </div>
 
                   <div>
                     <label className="block text-gray-700 text-sm font-semibold mb-2">
                       Имя держателя карты *
-                    </label>
-                    <input
-                      type="text"
+                </label>
+                <input
+                  type="text"
                       name="cardholderName"
                       value={cardData.cardholderName}
                       onChange={handleCardDataChange}
@@ -405,7 +396,7 @@ function ApplicationPage() {
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.cardholderName ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {errors.cardholderName && <p className="text-red-500 text-sm mt-1">{errors.cardholderName}</p>}
-                  </div>
+              </div>
                 </div>
 
                 <button
@@ -416,12 +407,12 @@ function ApplicationPage() {
                   {loading ? 'Обработка платежа...' : 'Оплатить $1'}
                 </button>
               </form>
-            </div>
+              </div>
           </div>
         )}
 
-        {/* Step 4: Финальное рассмотрение */}
-        {step === 4 && paymentCompleted && (
+        {/* Step 3: Финальное рассмотрение */}
+        {step === 3 && paymentCompleted && (
           <div className="bg-white rounded-2xl shadow-2xl p-8 text-center">
             <div className="mb-8">
               <div className="text-6xl mb-4">⏳</div>
@@ -476,8 +467,8 @@ function ApplicationPage() {
           </div>
         )}
 
-        {/* Step 5: Финальное решение */}
-        {step === 5 && (
+        {/* Step 4: Финальное решение */}
+        {step === 4 && (
           <div className="bg-white p-8 rounded-2xl shadow-xl text-center">
             {finalDecision === 'approved' ? (
               <>
@@ -502,12 +493,12 @@ function ApplicationPage() {
                   К сожалению, система принятия решений отклонила вашу заявку на займ.
                   Вы можете попробовать подать заявку снова позже.
                 </p>
-                <button
+            <button
                   onClick={() => setStep(1)}
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
-                >
+            >
                   Подать новую заявку
-                </button>
+            </button>
               </>
             )}
           </div>
