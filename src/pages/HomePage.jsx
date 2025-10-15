@@ -181,7 +181,7 @@ function HomePage() {
                                 className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 text-sm"
                                 placeholder="user@example.com"
                               />
-                            </div>
+        </div>
 
                             <div>
                               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -213,18 +213,8 @@ function HomePage() {
                                 </div>
                               </div>
                             </div>
-                          </div>
+        </div>
 
-                          {/* К возврату */}
-                          <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4">
-                            <div className="flex justify-between items-center">
-                              <span className="text-lg font-semibold text-gray-900">К возврату</span>
-                              <span className="text-2xl font-bold text-green-600">${payment.totalAmount}</span>
-                            </div>
-                            <div className="text-sm text-gray-600 mt-1">
-                              Месячный платеж: ${payment.monthlyPayment}
-                            </div>
-                          </div>
                           
                           {/* Quick actions */}
                           <div className="space-y-3">
