@@ -229,7 +229,7 @@ function ApplicationPage() {
                       name: 'Экспресс займ',
                       amount: formData.amount,
                       term: formData.termDays,
-                      rate: 2.0,
+                      rate: 20.0,
                       totalAmount: (formData.amount * 1.6).toFixed(2),
                       description: 'Быстрое одобрение, минимальные требования'
                     })}
@@ -239,7 +239,7 @@ function ApplicationPage() {
                     <div className="space-y-2 text-sm">
                       <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
                       <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 2.0% в месяц</p>
+                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
                       <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.6).toFixed(2)}</p>
                     </div>
                   </div>
@@ -251,7 +251,7 @@ function ApplicationPage() {
                       name: 'Стандартный займ',
                       amount: formData.amount,
                       term: formData.termDays,
-                      rate: 1.8,
+                      rate: 20.0,
                       totalAmount: (formData.amount * 1.5).toFixed(2),
                       description: 'Оптимальные условия, подходит для большинства'
                     })}
@@ -261,7 +261,7 @@ function ApplicationPage() {
                     <div className="space-y-2 text-sm">
                       <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
                       <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 1.8% в месяц</p>
+                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
                       <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.5).toFixed(2)}</p>
                     </div>
               </div>
@@ -273,7 +273,7 @@ function ApplicationPage() {
                       name: 'Премиум займ',
                       amount: formData.amount,
                       term: formData.termDays,
-                      rate: 1.5,
+                      rate: 20.0,
                       totalAmount: (formData.amount * 1.4).toFixed(2),
                       description: 'Выгодные условия для постоянных клиентов'
                     })}
@@ -283,7 +283,7 @@ function ApplicationPage() {
                     <div className="space-y-2 text-sm">
                       <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
                       <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 1.5% в месяц</p>
+                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
                       <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.4).toFixed(2)}</p>
                     </div>
                   </div>
@@ -306,7 +306,7 @@ function ApplicationPage() {
                 <div><span className="font-medium">Продукт:</span> {selectedProduct.name}</div>
                 <div><span className="font-medium">Сумма займа:</span> ${selectedProduct.amount}</div>
                 <div><span className="font-medium">Срок:</span> {selectedProduct.term} дней</div>
-                <div><span className="font-medium">Ставка:</span> {selectedProduct.rate}% в день</div>
+                <div><span className="font-medium">Ставка:</span> {selectedProduct.rate}% годовых</div>
                 <div className="col-span-2"><span className="font-medium">К возврату:</span> ${selectedProduct.totalAmount}</div>
               </div>
             </div>
