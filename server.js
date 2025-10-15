@@ -1,21 +1,40 @@
-import express from 'express'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const express = require('express')
+const cors = require('cors')
+const stripe = require('stripe')('sk_test_51234567890abcdef') // Тестовый секретный ключ
 
 const app = express()
-const port = process.env.PORT || 8080
+const PORT = process.env.PORT || 3001
 
-// Serve static files from dist directory
-app.use(express.static(join(__dirname, 'dist')))
+app.use(cors())
+app.use(express.json())
 
-// Handle React Router (return index.html for all routes)
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'))
+// Создание PaymentIntent для Stripe
+app.post('/api/create-payment-intent', async (req, res) => {
+  try {
+    const { amount, currency = 'usd' } = req.body
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount, // в центах
+      currency: currency,
+      metadata: {
+        integration_check: 'accept_a_payment',
+      },
+    })
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+    })
+  } catch (error) {
+    console.error('Error creating payment intent:', error)
+    res.status(500).json({ error: error.message })
+  }
 })
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port}`)
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Payment server is running' })
+})
+
+app.listen(PORT, () => {
+  console.log(`Payment server running on port ${PORT}`)
 })
