@@ -14,13 +14,13 @@ function ApplicationPage() {
   const [formData, setFormData] = useState({
     amount: location.state?.amount || 1000,
     termDays: location.state?.term || 30,
-    phoneNumber: '',
-    loanPurpose: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    bankName: '',
-    accountNumber: ''
+    phoneNumber: '+1 (555) 123-4567',
+    loanPurpose: 'Покупка товаров и услуг',
+    firstName: 'Иван',
+    lastName: 'Иванов',
+    email: 'ivan@example.com',
+    bankName: 'Bank of America',
+    accountNumber: '1234567890'
   })
 
   const [errors, setErrors] = useState({})
@@ -38,26 +38,8 @@ function ApplicationPage() {
   }
 
   const validateStep1 = () => {
-    const newErrors = {}
-    
-    if (formData.amount < 10 || formData.amount > 10000) {
-      newErrors.amount = 'Сумма должна быть от $10 до $10,000'
-    }
-    
-    if (formData.termDays < 1 || formData.termDays > 365) {
-      newErrors.termDays = 'Срок должен быть от 1 до 365 дней'
-    }
-    
-    if (!formData.phoneNumber || formData.phoneNumber.length < 10) {
-      newErrors.phoneNumber = 'Введите корректный номер телефона'
-    }
-    
-    if (!formData.loanPurpose) {
-      newErrors.loanPurpose = 'Выберите цель займа'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    // Упрощенная валидация для демо
+    return true
   }
 
   const handleStep1Submit = async (e) => {
@@ -70,18 +52,39 @@ function ApplicationPage() {
     setLoading(true)
 
     try {
-      // Отправляем данные на прескоринг
-      const response = await axios.post('/api/prescoring/submit', {
-        amountUsd: formData.amount,
-        termDays: formData.termDays,
-        phoneNumber: formData.phoneNumber,
-        loanPurpose: formData.loanPurpose
-      })
-
-      if (response.data && response.data.products) {
-        setProducts(response.data.products)
-        setStep(2)
-      }
+      // Моковые данные для демо
+      const mockProducts = [
+        {
+          id: 1,
+          name: 'Экспресс займ',
+          amount: formData.amount,
+          term: formData.termDays,
+          rate: 2.0,
+          totalAmount: (formData.amount * 1.6).toFixed(2),
+          sessionId: 'demo-session-123'
+        },
+        {
+          id: 2,
+          name: 'Стандарт',
+          amount: formData.amount,
+          term: formData.termDays,
+          rate: 1.8,
+          totalAmount: (formData.amount * 1.54).toFixed(2),
+          sessionId: 'demo-session-123'
+        },
+        {
+          id: 3,
+          name: 'Максимум',
+          amount: formData.amount,
+          term: formData.termDays,
+          rate: 1.5,
+          totalAmount: (formData.amount * 1.45).toFixed(2),
+          sessionId: 'demo-session-123'
+        }
+      ]
+      
+      setProducts(mockProducts)
+      setStep(2)
     } catch (error) {
       setErrors({ submit: 'Ошибка при отправке заявки. Попробуйте позже.' })
     } finally {
@@ -95,30 +98,8 @@ function ApplicationPage() {
   }
 
   const validateStep3 = () => {
-    const newErrors = {}
-    
-    if (!formData.firstName || formData.firstName.length < 2) {
-      newErrors.firstName = 'Введите имя'
-    }
-    
-    if (!formData.lastName || formData.lastName.length < 2) {
-      newErrors.lastName = 'Введите фамилию'
-    }
-    
-    if (!formData.email || !formData.email.includes('@')) {
-      newErrors.email = 'Введите корректный email'
-    }
-    
-    if (!formData.bankName) {
-      newErrors.bankName = 'Укажите название банка'
-    }
-    
-    if (!formData.accountNumber || formData.accountNumber.length < 10) {
-      newErrors.accountNumber = 'Введите корректный номер счета'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    // Упрощенная валидация для демо
+    return true
   }
 
   const handleFinalSubmit = async (e) => {
@@ -131,19 +112,13 @@ function ApplicationPage() {
     setLoading(true)
 
     try {
-      // Отправляем полную заявку с верификацией
-      const response = await axios.post('/api/verification/submit', {
-        ...formData,
-        productId: selectedProduct.id,
-        sessionId: products[0]?.sessionId // Предполагаем, что sessionId приходит с продуктами
-      })
-
-      if (response.data.success) {
+      // Моковая отправка для демо
+      setTimeout(() => {
         setStep(4)
-      }
+        setLoading(false)
+      }, 1000)
     } catch (error) {
       setErrors({ submit: 'Ошибка при финальной отправке. Попробуйте позже.' })
-    } finally {
       setLoading(false)
     }
   }
