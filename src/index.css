@@ -31,7 +31,7 @@ body {
 }
 
 .slider::-webkit-slider-track {
-  background: #9ca3af;
+  background: #10b981;
   height: 16px;
   border-radius: 8px;
 }
@@ -53,7 +53,7 @@ body {
 }
 
 .slider::-moz-range-track {
-  background: #9ca3af;
+  background: #10b981;
   height: 16px;
   border-radius: 8px;
   border: none;
