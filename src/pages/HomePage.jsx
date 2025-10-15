@@ -22,22 +22,6 @@ function HomePage() {
   const payment = calculatePayment()
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-purple-800 to-pink-800">
-        <div className="relative container mx-auto px-6 py-24">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-6xl md:text-7xl font-bold mb-8 text-white">
-              МикроФинанс
-          </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed">
-              Современная платформа для быстрых займов. 
-              <br />
-              <span className="text-pink-300 font-semibold">Получите деньги за 5 минут</span> с помощью ИИ-скоринга.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="container mx-auto px-6 py-16">
 
         {/* Кредитный калькулятор */}
@@ -226,86 +210,7 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white border border-gray-200 rounded-xl p-8 text-center hover:border-purple-300 transition-all duration-300 group shadow-sm hover:shadow-md">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">⚡</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Быстро</h3>
-          <p className="text-gray-600">
-            Одобрение за 5 минут, деньги на карте за 15 минут
-          </p>
-        </div>
 
-          <div className="bg-white border border-gray-200 rounded-xl p-8 text-center hover:border-purple-300 transition-all duration-300 group shadow-sm hover:shadow-md">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🔒</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Безопасно</h3>
-          <p className="text-gray-600">
-            Защита данных и конфиденциальность гарантированы
-          </p>
-        </div>
-
-          <div className="bg-white border border-gray-200 rounded-xl p-8 text-center hover:border-purple-300 transition-all duration-300 group shadow-sm hover:shadow-md">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">💳</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Удобно</h3>
-          <p className="text-gray-600">
-            Полностью онлайн, без посещения офиса
-          </p>
-        </div>
-      </div>
-
-      {/* Stats */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-12 mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-          <div>
-              <div className="text-4xl font-bold mb-2 text-gray-900">$10 - $10,000</div>
-              <div className="text-purple-600">Сумма займа</div>
-          </div>
-          <div>
-              <div className="text-4xl font-bold mb-2 text-gray-900">1 - 365</div>
-              <div className="text-purple-600">Срок займа (дни)</div>
-          </div>
-          <div>
-              <div className="text-4xl font-bold mb-2 text-gray-900">2%</div>
-              <div className="text-purple-600">Ставка в день</div>
-          </div>
-          <div>
-              <div className="text-4xl font-bold mb-2 text-gray-900">24/7</div>
-              <div className="text-purple-600">Работаем круглосуточно</div>
-          </div>
-        </div>
-      </div>
-
-      {/* How it works */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-12 shadow-sm">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-          Как получить займ?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center group">
-              <div className="bg-purple-100 border border-purple-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-purple-600">1</span>
-            </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Заполните анкету</h3>
-            <p className="text-gray-600">Укажите сумму, срок и личные данные</p>
-          </div>
-
-            <div className="text-center group">
-              <div className="bg-pink-100 border border-pink-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-pink-600">2</span>
-            </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Получите одобрение</h3>
-            <p className="text-gray-600">Выберите подходящий продукт</p>
-          </div>
-
-            <div className="text-center group">
-              <div className="bg-green-100 border border-green-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-green-600">3</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Получите деньги</h3>
-              <p className="text-gray-600">Деньги поступят на вашу карту</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

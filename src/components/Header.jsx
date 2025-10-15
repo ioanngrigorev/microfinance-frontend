@@ -16,30 +16,9 @@ function Header() {
               💰
             </div>
             <span className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-              МикроФинанс
+              Human Fintech
             </span>
           </Link>
-          
-          <div className="hidden md:flex items-center space-x-1">
-            <Link 
-              to="/" 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/')}`}
-            >
-              Главная
-            </Link>
-            <Link 
-              to="/calculator" 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/calculator')}`}
-            >
-              Калькулятор
-            </Link>
-            <Link 
-              to="/products" 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/products')}`}
-            >
-              Продукты
-            </Link>
-          </div>
 
           <div className="flex items-center space-x-3">
             <Link 

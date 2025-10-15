@@ -8,7 +8,7 @@ function Footer() {
               <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                 💰
               </div>
-              <span className="text-xl font-bold text-gray-900">МикроФинанс</span>
+              <span className="text-xl font-bold text-gray-900">Human Fintech</span>
             </div>
             <p className="text-gray-600 mb-4 max-w-md">
               Современная платформа для быстрых займов с использованием ИИ-скоринга. 
@@ -50,7 +50,7 @@ function Footer() {
         
         <div className="border-t border-gray-300 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 text-sm">
-            &copy; 2025 МикроФинанс. Все права защищены.
+            &copy; 2025 Human Fintech. Все права защищены.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="text-gray-600 text-sm hover:text-gray-900 transition-colors cursor-pointer">Политика конфиденциальности</span>
