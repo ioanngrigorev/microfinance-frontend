@@ -31,9 +31,9 @@ body {
 }
 
 .slider::-webkit-slider-track {
-  background: #d1d5db;
-  height: 12px;
-  border-radius: 6px;
+  background: #9ca3af;
+  height: 16px;
+  border-radius: 8px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -53,9 +53,9 @@ body {
 }
 
 .slider::-moz-range-track {
-  background: #e5e7eb;
-  height: 8px;
-  border-radius: 4px;
+  background: #9ca3af;
+  height: 16px;
+  border-radius: 8px;
   border: none;
 }
 

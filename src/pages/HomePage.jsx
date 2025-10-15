@@ -71,11 +71,6 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-              <p className="text-sm text-purple-700">
-                <span className="font-semibold">Процентная ставка:</span> {interestRate}% в день
-              </p>
-            </div>
 
             {/* Дополнительные поля */}
             <div className="mt-6 space-y-4">
@@ -178,36 +173,6 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Примеры */}
-        <div className="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Популярные суммы</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button
-              onClick={() => { setAmount(500); setTerm(14) }}
-              className="bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
-            >
-              $500 / 14 дней
-            </button>
-            <button
-              onClick={() => { setAmount(1000); setTerm(30) }}
-              className="bg-green-50 hover:bg-green-100 border border-green-200 text-green-700 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
-            >
-              $1,000 / 30 дней
-            </button>
-            <button
-              onClick={() => { setAmount(2000); setTerm(60) }}
-              className="bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-700 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
-            >
-              $2,000 / 60 дней
-            </button>
-            <button
-              onClick={() => { setAmount(5000); setTerm(180) }}
-              className="bg-orange-50 hover:bg-orange-100 border border-orange-200 text-orange-700 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
-            >
-              $5,000 / 180 дней
-            </button>
-          </div>
-        </div>
       </div>
 
 
