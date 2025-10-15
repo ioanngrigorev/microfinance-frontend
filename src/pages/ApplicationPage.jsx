@@ -52,8 +52,8 @@ function ApplicationPage() {
       newErrors.phoneNumber = 'Введите корректный номер телефона'
     }
     
-    if (!formData.loanPurpose || formData.loanPurpose.length < 5) {
-      newErrors.loanPurpose = 'Укажите цель займа (минимум 5 символов)'
+    if (!formData.loanPurpose) {
+      newErrors.loanPurpose = 'Выберите цель займа'
     }
 
     setErrors(newErrors)
@@ -252,15 +252,27 @@ function ApplicationPage() {
                 <label className="block text-gray-700 font-semibold mb-2">
                   Цель займа *
                 </label>
-                <textarea
+                <select
                   name="loanPurpose"
                   value={formData.loanPurpose}
                   onChange={handleChange}
-                  placeholder="Опишите, на что вы планируете потратить деньги"
-                  rows="4"
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.loanPurpose ? 'border-red-500' : 'border-gray-300'}`}
                   required
-                />
+                >
+                  <option value="">Выберите цель займа</option>
+                  <option value="Покупка товаров и услуг">🛒 Покупка товаров и услуг</option>
+                  <option value="Медицинские расходы">🏥 Медицинские расходы</option>
+                  <option value="Образование">🎓 Образование</option>
+                  <option value="Ремонт дома/квартиры">🏠 Ремонт дома/квартиры</option>
+                  <option value="Покупка автомобиля">🚗 Покупка автомобиля</option>
+                  <option value="Свадьба">💒 Свадьба</option>
+                  <option value="Отпуск/путешествие">✈️ Отпуск/путешествие</option>
+                  <option value="Бизнес-нужды">💼 Бизнес-нужды</option>
+                  <option value="Погашение других долгов">💳 Погашение других долгов</option>
+                  <option value="Непредвиденные расходы">⚡ Непредвиденные расходы</option>
+                  <option value="Покупка техники">📱 Покупка техники</option>
+                  <option value="Другое">📝 Другое</option>
+                </select>
                 {errors.loanPurpose && <p className="text-red-500 text-sm mt-1">{errors.loanPurpose}</p>}
               </div>
 
