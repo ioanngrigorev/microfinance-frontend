@@ -100,28 +100,58 @@ function HomePage() {
 
                         {/* Main content */}
                         <div className="p-6 space-y-6">
-                          {/* Credit limit card */}
-                          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200">
-                            <div className="flex items-center justify-between mb-4">
-                              <span className="text-sm text-gray-600">Доступный лимит</span>
-                              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            </div>
-                            
+                          {/* Credit calculator sliders */}
+                          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 border border-gray-200">
+                            {/* Сумма займа slider */}
                             <div className="mb-4">
-                              <div className="text-3xl font-bold text-gray-900 mb-2">$10,000</div>
-                              <div className="text-sm text-gray-600">Использовано $2,500 из $10,000</div>
-        </div>
+                              <div className="flex items-center justify-between mb-2">
+                                <label className="text-sm font-medium text-gray-700">
+                                  Сумма займа
+                                </label>
+                                <div className="text-lg font-bold text-gray-900">
+                                  ${amount.toLocaleString()}
+                                </div>
+                              </div>
+                              <input
+                                type="range"
+                                min="10"
+                                max="10000"
+                                step="10"
+                                value={amount}
+                                onChange={(e) => setAmount(Number(e.target.value))}
+                                className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
+                              />
+                              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>$10</span>
+                                <span>$10,000</span>
+                              </div>
+                            </div>
 
-                            {/* Progress bar */}
-                            <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
-                              <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full" style={{width: '25%'}}></div>
-        </div>
-
-                            <div className="flex justify-between text-xs text-gray-500">
-                              <span>$0</span>
-                              <span>$10,000</span>
-        </div>
-      </div>
+                            {/* Срок займа slider */}
+                            <div className="mb-2">
+                              <div className="flex items-center justify-between mb-2">
+                                <label className="text-sm font-medium text-gray-700">
+                                  Срок займа
+                                </label>
+                                <div className="text-lg font-bold text-gray-900">
+                                  {term} месяцев
+                                </div>
+                              </div>
+                              <input
+                                type="range"
+                                min="1"
+                                max="36"
+                                step="1"
+                                value={term}
+                                onChange={(e) => setTerm(Number(e.target.value))}
+                                className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
+                              />
+                              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>1 месяц</span>
+                                <span>36 месяцев</span>
+                              </div>
+                            </div>
+                          </div>
                           
                           {/* Quick actions */}
                           <div className="grid grid-cols-2 gap-3">
@@ -189,53 +219,6 @@ function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Левая колонка - параметры */}
           <div>
-            <div className="mb-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <label className="text-white font-medium">
-                      Сумма займа
-                    </label>
-                    <div className="text-3xl font-bold text-white">
-                      ${amount.toLocaleString()}
-                    </div>
-                  </div>
-              <input
-                type="range"
-                min="10"
-                max="10000"
-                step="10"
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
-              />
-                  <div className="flex justify-between text-sm text-white/70 mt-3">
-                    <span>$10</span>
-                    <span>$10,000</span>
-                  </div>
-            </div>
-
-            <div className="mb-10">
-              <div className="flex items-center justify-between mb-6">
-                <label className="text-white font-medium">
-                  Срок займа
-                </label>
-                <div className="text-3xl font-bold text-white">
-                  {term} месяцев
-                </div>
-              </div>
-              <input
-                type="range"
-                min="1"
-                max="36"
-                step="1"
-                value={term}
-                onChange={(e) => setTerm(Number(e.target.value))}
-                className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
-              />
-                <div className="flex justify-between text-sm text-white/70 mt-3">
-                  <span>1 месяц</span>
-                  <span>36 месяцев</span>
-                </div>
-            </div>
 
 
             {/* Дополнительные поля */}

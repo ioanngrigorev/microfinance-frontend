@@ -118,33 +118,34 @@ function ApplicationPage() {
   }, [step])
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold text-white text-center mb-8">
-          Заявка на займ 📝
-        </h1>
+    <div className="min-h-screen animated-gradient-bg">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold text-white text-center mb-8">
+            Заявка на займ 📝
+          </h1>
 
         {/* Progress bar */}
-        <div className="bg-white rounded-lg shadow-lg p-4 mb-8">
+        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg shadow-lg p-4 mb-8">
           <div className="flex justify-between items-center">
-            <div className={`flex items-center ${step >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 1 ? 'text-white' : 'text-white/50'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
                 1
               </div>
               <span className="ml-1 font-semibold hidden lg:inline text-xs">Анализ</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-white' : 'bg-white/30'}`}></div>
             
-            <div className={`flex items-center ${step >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 2 ? 'text-white' : 'text-white/50'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
                 2
               </div>
               <span className="ml-1 font-semibold hidden lg:inline text-xs">Оплата</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-green-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-white' : 'bg-white/30'}`}></div>
             
-            <div className={`flex items-center ${step >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 3 ? 'text-white' : 'text-white/50'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
                 ✓
               </div>
               <span className="ml-1 font-semibold hidden lg:inline text-xs">Рассмотрение</span>
@@ -154,22 +155,22 @@ function ApplicationPage() {
 
         {/* Step 1: Анализ и предодобрение */}
         {step === 1 && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl shadow-2xl p-8">
             {loading ? (
               // Фаза анализа
               <div className="text-center">
                 <div className="mb-8">
                   <div className="text-6xl mb-4">⏳</div>
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">Анализ вашей заявки</h2>
-                  <p className="text-gray-600 text-lg">
+                  <h2 className="text-3xl font-bold text-white mb-4">Анализ вашей заявки</h2>
+                  <p className="text-white/80 text-lg">
                     Система принятия решений анализирует ваши данные...
                   </p>
                 </div>
 
                 {/* Отображение данных из калькулятора */}
-                <div className="bg-blue-50 rounded-lg p-6 mb-8">
-                  <h4 className="font-semibold text-blue-800 mb-4">Ваши параметры займа:</h4>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 mb-8">
+                  <h4 className="font-semibold text-white mb-4">Ваши параметры займа:</h4>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-white/80">
                     <div><span className="font-medium">Сумма:</span> ${formData.amount}</div>
                     <div><span className="font-medium">Срок:</span> {formData.termDays} месяцев</div>
                     <div><span className="font-medium">Телефон:</span> {formData.phoneNumber}</div>
@@ -178,44 +179,44 @@ function ApplicationPage() {
                   </div>
                 </div>
 
-                <div className="bg-blue-50 rounded-lg p-6 mb-8">
-                  <h3 className="text-xl font-semibold text-blue-800 mb-4">Проверяем:</h3>
+                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 mb-8">
+                  <h3 className="text-xl font-semibold text-white mb-4">Проверяем:</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Кредитная история
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Кредитная история
                     </div>
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Доходы и расходы
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Доходы и расходы
                     </div>
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Банковские данные
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Банковские данные
                     </div>
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Скоринг-модель
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Скоринг-модель
                     </div>
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Риск-анализ
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Риск-анализ
                     </div>
-                    <div className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✔</span> Финальная проверка
+                    <div className="flex items-center text-white/80">
+                      <span className="text-green-300 mr-2">✔</span> Финальная проверка
                     </div>
                 </div>
               </div>
 
                 <div className="mb-8">
-                  <div className="bg-gray-200 rounded-full h-3 mb-4">
-                    <div className="bg-blue-600 h-3 rounded-full transition-all duration-300" style={{width: `${analysisProgress}%`}}></div>
+                  <div className="bg-white/30 rounded-full h-3 mb-4">
+                    <div className="bg-white h-3 rounded-full transition-all duration-300" style={{width: `${analysisProgress}%`}}></div>
                   </div>
-                  <p className="text-gray-600">Анализ завершен на {analysisProgress}%</p>
+                  <p className="text-white/80">Анализ завершен на {analysisProgress}%</p>
               </div>
 
-                <p className="text-blue-600 font-semibold text-lg">Принимаем предварительное решение...</p>
+                <p className="text-white font-semibold text-lg">Принимаем предварительное решение...</p>
               </div>
             ) : (
               // Фаза предодобрения
               <div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Предварительное одобрение!</h2>
-                <p className="text-gray-600 text-center mb-8">
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">Предварительное одобрение!</h2>
+                <p className="text-white/80 text-center mb-8">
                   🎉 Поздравляем! Система принятия решений предварительно одобрила вашу заявку.
                   Выберите один из предложенных продуктов:
                 </p>
@@ -223,7 +224,7 @@ function ApplicationPage() {
                 {/* Продукты */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   <div 
-                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 cursor-pointer transition transform hover:scale-105"
+                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
                     onClick={() => handleProductSelect({
                       id: 1,
                       name: 'Экспресс займ',
@@ -234,18 +235,18 @@ function ApplicationPage() {
                       description: 'Быстрое одобрение, минимальные требования'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-blue-800 mb-3">Экспресс займ</h4>
-                    <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
-                    <div className="space-y-2 text-sm">
+                    <h4 className="text-xl font-bold text-blue-300 mb-3">Экспресс займ</h4>
+                    <p className="text-white/80 mb-4">Быстрое одобрение, минимальные требования</p>
+                    <div className="space-y-2 text-sm text-white/90">
                       <p><span className="font-semibold">Сумма:</span> $500</p>
                       <p><span className="font-semibold">Срок:</span> 1 месяц</p>
                       <p><span className="font-semibold">Ставка:</span> 40% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-300">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
                     </div>
                   </div>
 
                   <div 
-                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-green-500 cursor-pointer transition transform hover:scale-105"
+                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
                     onClick={() => handleProductSelect({
                       id: 2,
                       name: 'Стандартный займ',
@@ -256,18 +257,18 @@ function ApplicationPage() {
                       description: 'Оптимальные условия, подходит для большинства'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-green-800 mb-3">Стандартный займ</h4>
-                    <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
-                    <div className="space-y-2 text-sm">
+                    <h4 className="text-xl font-bold text-green-300 mb-3">Стандартный займ</h4>
+                    <p className="text-white/80 mb-4">Оптимальные условия, подходит для большинства</p>
+                    <div className="space-y-2 text-sm text-white/90">
                       <p><span className="font-semibold">Сумма:</span> $2,500</p>
                       <p><span className="font-semibold">Срок:</span> 6 месяцев</p>
                       <p><span className="font-semibold">Ставка:</span> 30% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-300">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
                     </div>
               </div>
 
                   <div 
-                    className="border-2 border-gray-200 rounded-lg p-6 hover:border-purple-500 cursor-pointer transition transform hover:scale-105"
+                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
                     onClick={() => handleProductSelect({
                       id: 3,
                       name: 'Премиум займ',
@@ -278,13 +279,13 @@ function ApplicationPage() {
                       description: 'Выгодные условия для постоянных клиентов'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-purple-800 mb-3">Премиум займ</h4>
-                    <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
-                    <div className="space-y-2 text-sm">
+                    <h4 className="text-xl font-bold text-purple-300 mb-3">Премиум займ</h4>
+                    <p className="text-white/80 mb-4">Выгодные условия для постоянных клиентов</p>
+                    <div className="space-y-2 text-sm text-white/90">
                       <p><span className="font-semibold">Сумма:</span> $4,800</p>
                       <p><span className="font-semibold">Срок:</span> 12 месяцев</p>
                       <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-300">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
                     </div>
                   </div>
                 </div>
@@ -503,6 +504,7 @@ function ApplicationPage() {
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   )
