@@ -11,11 +11,8 @@ function Header() {
     <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform">
-              💰
-            </div>
-            <span className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+          <Link to="/" className="group">
+            <span className="text-3xl font-black text-gray-900 group-hover:text-purple-600 transition-colors tracking-tight">
               Human Fintech
             </span>
           </Link>

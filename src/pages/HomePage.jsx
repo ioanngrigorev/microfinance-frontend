@@ -27,11 +27,7 @@ function HomePage() {
       <div className="container mx-auto px-6 py-16">
 
         {/* Hero Section - Stripe Style */}
-        <div className="relative overflow-hidden rounded-3xl mb-16">
-          {/* Stripe-style gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-200 via-purple-200 to-blue-200 opacity-80"></div>
-          <div className="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-indigo-300 opacity-60"></div>
-          <div className="absolute inset-0 bg-gradient-to-bl from-red-200 via-orange-200 to-yellow-200 opacity-40"></div>
+        <div className="relative overflow-hidden animated-gradient-bg rounded-3xl mb-16">
           
           <div className="relative px-12 py-20">
             <div className="max-w-6xl mx-auto">
@@ -51,7 +47,7 @@ function HomePage() {
                     Финансовая инфраструктура
                     <br />
                     <span className="text-gray-700">для роста вашего дохода</span>
-                  </h1>
+          </h1>
                   
                   {/* Description */}
                   <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
@@ -72,42 +68,115 @@ function HomePage() {
                   </div>
                 </div>
                 
-                {/* Right side - Visual elements */}
-                <div className="relative">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-semibold text-gray-900">Ваш кредитный лимит</h3>
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-600">Доступно</span>
-                          <span className="text-2xl font-bold text-gray-900">$10,000</span>
-                        </div>
+                {/* Right side - Mobile App Widget */}
+                <div className="relative flex justify-center">
+                  <div className="relative">
+                    {/* Mobile phone frame */}
+                    <div className="w-80 h-[600px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden">
                         
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full" style={{width: '75%'}}></div>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 gap-4 pt-4">
-                          <div className="text-center">
-                            <div className="text-2xl font-bold text-gray-900">20%</div>
-                            <div className="text-sm text-gray-600">Годовая ставка</div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-2xl font-bold text-gray-900">24ч</div>
-                            <div className="text-sm text-gray-600">На одобрение</div>
+                        {/* Status bar */}
+                        <div className="bg-white px-6 py-3 flex justify-between items-center text-xs text-gray-600">
+                          <span>9:41</span>
+                          <div className="flex items-center space-x-1">
+                            <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
+                            <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
+                            <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                        
+                        {/* App header */}
+                        <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
+                          <div className="flex items-center justify-between text-white">
+                            <div>
+                              <h2 className="text-lg font-bold">Human Fintech</h2>
+                              <p className="text-sm opacity-90">Кредитный лимит</p>
+                            </div>
+                            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                              <span className="text-sm">👤</span>
+          </div>
+        </div>
+      </div>
+
+                        {/* Main content */}
+                        <div className="p-6 space-y-6">
+                          {/* Credit limit card */}
+                          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200">
+                            <div className="flex items-center justify-between mb-4">
+                              <span className="text-sm text-gray-600">Доступный лимит</span>
+                              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <div className="text-3xl font-bold text-gray-900 mb-2">$10,000</div>
+                              <div className="text-sm text-gray-600">Использовано $2,500 из $10,000</div>
+        </div>
+
+                            {/* Progress bar */}
+                            <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+                              <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full" style={{width: '25%'}}></div>
+        </div>
+
+                            <div className="flex justify-between text-xs text-gray-500">
+                              <span>$0</span>
+                              <span>$10,000</span>
+        </div>
+      </div>
+                          
+                          {/* Quick actions */}
+                          <div className="grid grid-cols-2 gap-3">
+                            <button className="bg-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold">
+                              Получить займ
+                            </button>
+                            <button className="bg-gray-100 text-gray-700 py-3 px-4 rounded-xl text-sm font-semibold">
+                              История
+                            </button>
+      </div>
+
+      {/* Stats */}
+                          <div className="bg-white border border-gray-200 rounded-xl p-4">
+                            <h3 className="text-sm font-semibold text-gray-900 mb-3">Статистика</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="text-center">
+                                <div className="text-xl font-bold text-gray-900">20%</div>
+                                <div className="text-xs text-gray-600">Годовая ставка</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="text-xl font-bold text-gray-900">24ч</div>
+                                <div className="text-xs text-gray-600">На одобрение</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Recent activity */}
+                          <div className="bg-white border border-gray-200 rounded-xl p-4">
+                            <h3 className="text-sm font-semibold text-gray-900 mb-3">Последние операции</h3>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between text-xs">
+                                <div className="flex items-center space-x-2">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                  <span className="text-gray-600">Одобрен займ</span>
+                                </div>
+                                <span className="text-gray-900 font-medium">+$2,500</span>
+                              </div>
+                              <div className="flex items-center justify-between text-xs">
+                                <div className="flex items-center space-x-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  <span className="text-gray-600">Создан кошелек</span>
+                                </div>
+                                <span className="text-gray-900 font-medium">USDT</span>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+                    {/* Floating elements around phone */}
+                    <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full opacity-60 animate-pulse"></div>
+                    <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full opacity-60 animate-bounce"></div>
+                    <div className="absolute top-1/2 -right-8 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-60 animate-pulse" style={{animationDelay: '1s'}}></div>
                   </div>
-                  
-                  {/* Floating elements */}
-                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full opacity-60 animate-pulse"></div>
-                  <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full opacity-60 animate-bounce"></div>
                 </div>
               </div>
             </div>
@@ -115,20 +184,20 @@ function HomePage() {
         </div>
 
         {/* Калькулятор */}
-        <div className="bg-white rounded-3xl p-12 mb-16 shadow-xl border border-gray-100">
+        <div className="animated-gradient-bg rounded-3xl p-12 mb-16 shadow-xl relative overflow-hidden">
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Левая колонка - параметры */}
           <div>
             <div className="mb-10">
-              <div className="flex items-center justify-between mb-6">
-                <label className="text-gray-700 font-medium">
-                  Сумма займа
-                </label>
-                <div className="text-3xl font-bold text-gray-900">
-                  ${amount.toLocaleString()}
-                </div>
-              </div>
+                  <div className="flex items-center justify-between mb-6">
+                    <label className="text-white font-medium">
+                      Сумма займа
+                    </label>
+                    <div className="text-3xl font-bold text-white">
+                      ${amount.toLocaleString()}
+                    </div>
+                  </div>
               <input
                 type="range"
                 min="10"
@@ -138,18 +207,18 @@ function HomePage() {
                 onChange={(e) => setAmount(Number(e.target.value))}
                 className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
               />
-              <div className="flex justify-between text-sm text-gray-400 mt-3">
-                <span>$10</span>
-                <span>$10,000</span>
-              </div>
+                  <div className="flex justify-between text-sm text-white/70 mt-3">
+                    <span>$10</span>
+                    <span>$10,000</span>
+                  </div>
             </div>
 
             <div className="mb-10">
               <div className="flex items-center justify-between mb-6">
-                <label className="text-gray-700 font-medium">
+                <label className="text-white font-medium">
                   Срок займа
                 </label>
-                <div className="text-3xl font-bold text-gray-900">
+                <div className="text-3xl font-bold text-white">
                   {term} месяцев
                 </div>
               </div>
@@ -162,31 +231,31 @@ function HomePage() {
                 onChange={(e) => setTerm(Number(e.target.value))}
                 className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
               />
-              <div className="flex justify-between text-sm text-gray-400 mt-3">
-                <span>1 месяц</span>
-                <span>36 месяцев</span>
-              </div>
+                <div className="flex justify-between text-sm text-white/70 mt-3">
+                  <span>1 месяц</span>
+                  <span>36 месяцев</span>
+                </div>
             </div>
 
 
             {/* Дополнительные поля */}
             <div className="space-y-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-3">
-                  Номер телефона
-                </label>
-                <input
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  maxLength={12}
-                  className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="+15551234567"
-                />
-              </div>
+                  <div>
+                    <label className="block text-white font-medium mb-3">
+                      Номер телефона
+                    </label>
+                    <input
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      maxLength={12}
+                      className="w-full px-6 py-4 bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-2xl focus:ring-0 focus:border-white/50 focus:bg-white/30 transition-all duration-200 text-white placeholder-white/60"
+                      placeholder="+15551234567"
+                    />
+                  </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-3">
+                <label className="block text-white font-medium mb-3">
                   Email
                 </label>
                 <input
@@ -194,20 +263,20 @@ function HomePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   maxLength={50}
-                  className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  className="w-full px-6 py-4 bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-2xl focus:ring-0 focus:border-white/50 focus:bg-white/30 transition-all duration-200 text-white placeholder-white/60"
                   placeholder="user@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-3">
+                <label className="block text-white font-medium mb-3">
                   Цель займа
                 </label>
                 <div className="relative">
                   <select
                     value={loanPurpose}
                     onChange={(e) => setLoanPurpose(e.target.value)}
-                    className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-blue-500 focus:bg-white transition-all duration-200 text-gray-900 appearance-none cursor-pointer pr-12"
+                    className="w-full px-6 py-4 bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-2xl focus:ring-0 focus:border-white/50 focus:bg-white/30 transition-all duration-200 text-white appearance-none cursor-pointer pr-12"
                   >
                     <option value="Покупка товаров и услуг">Покупка товаров и услуг</option>
                     <option value="Медицинские расходы">Медицинские расходы</option>
@@ -223,7 +292,7 @@ function HomePage() {
                     <option value="Другое">Другое</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-6 pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
@@ -233,34 +302,34 @@ function HomePage() {
           </div>
 
           {/* Правая колонка - результаты */}
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8">
+          <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-8">
             <h3 className="text-2xl font-bold text-white mb-8">Расчет займа</h3>
             
             <div className="space-y-6">
-              <div className="flex justify-between items-center py-4 border-b border-gray-700">
-                <span className="text-gray-300 font-medium">Сумма займа</span>
+              <div className="flex justify-between items-center py-4 border-b border-white/30">
+                <span className="text-white/80 font-medium">Сумма займа</span>
                 <span className="text-2xl font-bold text-white">${amount.toLocaleString()}</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-gray-700">
-                <span className="text-gray-300 font-medium">Срок</span>
+              <div className="flex justify-between items-center py-4 border-b border-white/30">
+                <span className="text-white/80 font-medium">Срок</span>
                 <span className="text-2xl font-bold text-white">{term} месяцев</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-gray-700">
-                <span className="text-gray-300 font-medium">Проценты</span>
-                <span className="text-2xl font-bold text-orange-400">${payment.totalInterest}</span>
+              <div className="flex justify-between items-center py-4 border-b border-white/30">
+                <span className="text-white/80 font-medium">Проценты</span>
+                <span className="text-2xl font-bold text-orange-300">${payment.totalInterest}</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b-2 border-gray-600">
-                <span className="text-gray-300 font-medium">Месячный платеж</span>
-                <span className="text-2xl font-bold text-blue-400">${payment.monthlyPayment}</span>
+              <div className="flex justify-between items-center py-4 border-b-2 border-white/40">
+                <span className="text-white/80 font-medium">Месячный платеж</span>
+                <span className="text-2xl font-bold text-blue-300">${payment.monthlyPayment}</span>
               </div>
 
-              <div className="bg-gray-800 rounded-2xl p-6 mt-6">
+              <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 mt-6">
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-semibold text-white">К возврату</span>
-                  <span className="text-4xl font-bold text-green-400">${payment.totalAmount}</span>
+                  <span className="text-4xl font-bold text-green-300">${payment.totalAmount}</span>
                 </div>
               </div>
             </div>
