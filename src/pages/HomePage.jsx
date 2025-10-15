@@ -4,6 +4,9 @@ import { useState } from 'react'
 function HomePage() {
   const [amount, setAmount] = useState(1000)
   const [term, setTerm] = useState(30)
+  const [phoneNumber, setPhoneNumber] = useState('+1 (555) 123-4567')
+  const [email, setEmail] = useState('user@example.com')
+  const [loanPurpose, setLoanPurpose] = useState('Покупка товаров и услуг')
   const interestRate = 2.0 // 2% в день
 
   const calculatePayment = () => {
@@ -72,6 +75,59 @@ function HomePage() {
                 <span className="font-semibold">Процентная ставка:</span> {interestRate}% в день
               </p>
             </div>
+
+            {/* Дополнительные поля */}
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-2">
+                  Номер телефона
+                </label>
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="user@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-2">
+                  Цель займа
+                </label>
+                <select
+                  value={loanPurpose}
+                  onChange={(e) => setLoanPurpose(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="Покупка товаров и услуг">🛒 Покупка товаров и услуг</option>
+                  <option value="Медицинские расходы">🏥 Медицинские расходы</option>
+                  <option value="Образование">🎓 Образование</option>
+                  <option value="Ремонт дома/квартиры">🏠 Ремонт дома/квартиры</option>
+                  <option value="Покупка автомобиля">🚗 Покупка автомобиля</option>
+                  <option value="Свадьба">💒 Свадьба</option>
+                  <option value="Отпуск/путешествие">✈️ Отпуск/путешествие</option>
+                  <option value="Бизнес-нужды">💼 Бизнес-нужды</option>
+                  <option value="Погашение других долгов">💳 Погашение других долгов</option>
+                  <option value="Непредвиденные расходы">⚡ Непредвиденные расходы</option>
+                  <option value="Покупка техники">📱 Покупка техники</option>
+                  <option value="Другое">📝 Другое</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Правая колонка - результаты */}
@@ -107,7 +163,13 @@ function HomePage() {
 
             <Link 
               to="/application"
-              state={{ amount, term }}
+              state={{ 
+                amount, 
+                term, 
+                phoneNumber, 
+                email, 
+                loanPurpose 
+              }}
               className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg text-lg font-semibold transition block text-center"
             >
               Оформить займ

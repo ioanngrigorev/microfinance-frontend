@@ -14,11 +14,11 @@ function ApplicationPage() {
   const [formData, setFormData] = useState({
     amount: location.state?.amount || 1000,
     termDays: location.state?.term || 30,
-    phoneNumber: '+1 (555) 123-4567',
-    loanPurpose: 'Покупка товаров и услуг',
+    phoneNumber: location.state?.phoneNumber || '+1 (555) 123-4567',
+    loanPurpose: location.state?.loanPurpose || 'Покупка товаров и услуг',
     firstName: 'Иван',
     lastName: 'Иванов',
-    email: 'ivan@example.com',
+    email: location.state?.email || 'ivan@example.com',
     country: 'US',
     bankName: 'Bank of America',
     accountNumber: '1234567890'
