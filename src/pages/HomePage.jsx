@@ -153,64 +153,18 @@ function HomePage() {
                             </div>
                           </div>
 
-                          {/* Input fields */}
-                          <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-4">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Номер телефона
-                              </label>
-                              <input
-                                type="tel"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                maxLength={12}
-                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 text-sm"
-                                placeholder="+15551234567"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Email
-                              </label>
-                              <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                maxLength={50}
-                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 text-sm"
-                                placeholder="user@example.com"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Цель займа
-                              </label>
-                              <div className="relative">
-                                <select
-                                  value={loanPurpose}
-                                  onChange={(e) => setLoanPurpose(e.target.value)}
-                                  className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none cursor-pointer pr-8 text-sm"
-                                >
-                                  <option value="Покупка товаров и услуг">Покупка товаров и услуг</option>
-                                  <option value="Медицинские расходы">Медицинские расходы</option>
-                                  <option value="Образование">Образование</option>
-                                  <option value="Ремонт дома/квартиры">Ремонт дома/квартиры</option>
-                                  <option value="Покупка автомобиля">Покупка автомобиля</option>
-                                  <option value="Свадьба">Свадьба</option>
-                                  <option value="Отпуск/путешествие">Отпуск/путешествие</option>
-                                  <option value="Бизнес-нужды">Бизнес-нужды</option>
-                                  <option value="Погашение других долгов">Погашение других долгов</option>
-                                  <option value="Непредвиденные расходы">Непредвиденные расходы</option>
-                                  <option value="Покупка техники">Покупка техники</option>
-                                  <option value="Другое">Другое</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </div>
+                          {/* К возврату */}
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4">
+                            <div className="text-center">
+                              <div className="text-sm font-medium text-gray-700 mb-2">К возврату</div>
+                              <div className="text-3xl font-bold text-green-600 mb-2">
+                                ${(amount * 1.10).toFixed(2)}
+                              </div>
+                              <div className="text-xs text-gray-600 mb-2">
+                                При ставке 10% годовых
+                              </div>
+                              <div className="text-xs text-gray-500 bg-gray-100 rounded-lg p-2">
+                                💡 Финальные условия продукта будут сформированы после проверки ваших документов
                               </div>
                             </div>
                           </div>
@@ -219,13 +173,10 @@ function HomePage() {
                           <div className="space-y-3">
             <Link 
               to="/application" 
-                              state={{ 
-                                amount, 
-                                term, 
-                                phoneNumber, 
-                                email, 
-                                loanPurpose 
-                              }}
+              state={{ 
+                amount, 
+                term
+              }}
                               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-colors block text-center"
                             >
                               Получить деньги
