@@ -227,20 +227,20 @@ function ApplicationPage() {
                     onClick={() => handleProductSelect({
                       id: 1,
                       name: 'Экспресс займ',
-                      amount: formData.amount,
-                      term: formData.termDays,
-                      rate: 20.0,
-                      totalAmount: (formData.amount * 1.6).toFixed(2),
+                      amount: 500,
+                      term: 1,
+                      rate: 40.0,
+                      totalAmount: (500 + (500 * (40/12) * 1) / 100).toFixed(2),
                       description: 'Быстрое одобрение, минимальные требования'
                     })}
                   >
                     <h4 className="text-xl font-bold text-blue-800 mb-3">Экспресс займ</h4>
                     <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
                     <div className="space-y-2 text-sm">
-                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.6).toFixed(2)}</p>
+                      <p><span className="font-semibold">Сумма:</span> $500</p>
+                      <p><span className="font-semibold">Срок:</span> 1 месяц</p>
+                      <p><span className="font-semibold">Ставка:</span> 40% годовых</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
                     </div>
                   </div>
 
@@ -249,20 +249,20 @@ function ApplicationPage() {
                     onClick={() => handleProductSelect({
                       id: 2,
                       name: 'Стандартный займ',
-                      amount: formData.amount,
-                      term: formData.termDays,
-                      rate: 20.0,
-                      totalAmount: (formData.amount * 1.5).toFixed(2),
+                      amount: 2500,
+                      term: 6,
+                      rate: 30.0,
+                      totalAmount: (2500 + (2500 * (30/12) * 6) / 100).toFixed(2),
                       description: 'Оптимальные условия, подходит для большинства'
                     })}
                   >
                     <h4 className="text-xl font-bold text-green-800 mb-3">Стандартный займ</h4>
                     <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
                     <div className="space-y-2 text-sm">
-                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.5).toFixed(2)}</p>
+                      <p><span className="font-semibold">Сумма:</span> $2,500</p>
+                      <p><span className="font-semibold">Срок:</span> 6 месяцев</p>
+                      <p><span className="font-semibold">Ставка:</span> 30% годовых</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
                     </div>
               </div>
 
@@ -271,20 +271,20 @@ function ApplicationPage() {
                     onClick={() => handleProductSelect({
                       id: 3,
                       name: 'Премиум займ',
-                      amount: formData.amount,
-                      term: formData.termDays,
+                      amount: 4800,
+                      term: 12,
                       rate: 20.0,
-                      totalAmount: (formData.amount * 1.4).toFixed(2),
+                      totalAmount: (4800 + (4800 * (20/12) * 12) / 100).toFixed(2),
                       description: 'Выгодные условия для постоянных клиентов'
                     })}
                   >
                     <h4 className="text-xl font-bold text-purple-800 mb-3">Премиум займ</h4>
                     <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
                     <div className="space-y-2 text-sm">
-                      <p><span className="font-semibold">Сумма:</span> ${formData.amount}</p>
-                      <p><span className="font-semibold">Срок:</span> {formData.termDays} месяцев</p>
+                      <p><span className="font-semibold">Сумма:</span> $4,800</p>
+                      <p><span className="font-semibold">Срок:</span> 12 месяцев</p>
                       <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(formData.amount * 1.4).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
                     </div>
                   </div>
                 </div>

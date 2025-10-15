@@ -26,32 +26,88 @@ function HomePage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 py-16">
 
-        {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl mb-16">
-          <div className="absolute inset-0 bg-black/10"></div>
+        {/* Hero Section - Stripe Style */}
+        <div className="relative overflow-hidden rounded-3xl mb-16">
+          {/* Stripe-style gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-200 via-purple-200 to-blue-200 opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-indigo-300 opacity-60"></div>
+          <div className="absolute inset-0 bg-gradient-to-bl from-red-200 via-orange-200 to-yellow-200 opacity-40"></div>
+          
           <div className="relative px-12 py-20">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                Кредиты в стейблкоинах
-                <br />
-                <span className="text-blue-200">для всех национальностей</span>
-              </h1>
-              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Получите мгновенный доступ к кредитам в USDT, USDC и других стейблкоинах. 
-                Без границ, без ограничений по гражданству. Финансовая свобода для каждого.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <div className="flex items-center space-x-2 text-white/80">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Мгновенное одобрение</span>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                {/* Left side - Content */}
+                <div className="space-y-8">
+                  {/* Pill-shaped CTA */}
+                  <div className="inline-flex items-center bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    <span>Human Fintech 2025</span>
+                    <span className="ml-2">•</span>
+                    <span className="ml-2">Попробуйте сейчас →</span>
+                  </div>
+                  
+                  {/* Main headline */}
+                  <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+                    Финансовая инфраструктура
+                    <br />
+                    <span className="text-gray-700">для роста вашего дохода</span>
+                  </h1>
+                  
+                  {/* Description */}
+                  <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
+                    Присоединяйтесь к тысячам клиентов, которые используют Human Fintech для получения кредитов в стейблкоинах, 
+                    создания крипто-кошельков, управления финансами и построения более прибыльного бизнеса.
+                  </p>
+                  
+                  {/* Email input and CTA */}
+                  <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+                    <input
+                      type="email"
+                      placeholder="Email адрес"
+                      className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    />
+                    <button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                      Начать сейчас →
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2 text-white/80">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span>Без проверки кредитной истории</span>
-                </div>
-                <div className="flex items-center space-x-2 text-white/80">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span>Доступно в любой стране</span>
+                
+                {/* Right side - Visual elements */}
+                <div className="relative">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold text-gray-900">Ваш кредитный лимит</h3>
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">Доступно</span>
+                          <span className="text-2xl font-bold text-gray-900">$10,000</span>
+                        </div>
+                        
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full" style={{width: '75%'}}></div>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4 pt-4">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-gray-900">20%</div>
+                            <div className="text-sm text-gray-600">Годовая ставка</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-gray-900">24ч</div>
+                            <div className="text-sm text-gray-600">На одобрение</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Floating elements */}
+                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full opacity-60 animate-pulse"></div>
+                  <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full opacity-60 animate-bounce"></div>
                 </div>
               </div>
             </div>
