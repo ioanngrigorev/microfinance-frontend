@@ -261,38 +261,7 @@ function ApplicationPage() {
     setLoading(true)
 
     try {
-      // Моковые данные для демо
-      const mockProducts = [
-        {
-          id: 1,
-          name: 'Экспресс займ',
-          amount: formData.amount,
-          term: formData.termDays,
-          rate: 2.0,
-          totalAmount: (formData.amount * 1.6).toFixed(2),
-          sessionId: 'demo-session-123'
-        },
-        {
-          id: 2,
-          name: 'Стандарт',
-          amount: formData.amount,
-          term: formData.termDays,
-          rate: 1.8,
-          totalAmount: (formData.amount * 1.54).toFixed(2),
-          sessionId: 'demo-session-123'
-        },
-        {
-          id: 3,
-          name: 'Максимум',
-          amount: formData.amount,
-          term: formData.termDays,
-          rate: 1.5,
-          totalAmount: (formData.amount * 1.45).toFixed(2),
-          sessionId: 'demo-session-123'
-        }
-      ]
-      
-      setProducts(mockProducts)
+      // Переходим к скорингу
       setStep(2)
     } catch (error) {
       setErrors({ submit: 'Ошибка при отправке заявки. Попробуйте позже.' })
@@ -301,9 +270,45 @@ function ApplicationPage() {
     }
   }
 
+  const handleScoringComplete = () => {
+    // Моковые данные для демо
+    const mockProducts = [
+      {
+        id: 1,
+        name: 'Экспресс займ',
+        amount: formData.amount,
+        term: formData.termDays,
+        rate: 2.0,
+        totalAmount: (formData.amount * 1.6).toFixed(2),
+        sessionId: 'demo-session-123'
+      },
+      {
+        id: 2,
+        name: 'Стандарт',
+        amount: formData.amount,
+        term: formData.termDays,
+        rate: 1.8,
+        totalAmount: (formData.amount * 1.54).toFixed(2),
+        sessionId: 'demo-session-123'
+      },
+      {
+        id: 3,
+        name: 'Максимум',
+        amount: formData.amount,
+        term: formData.termDays,
+        rate: 1.5,
+        totalAmount: (formData.amount * 1.45).toFixed(2),
+        sessionId: 'demo-session-123'
+      }
+    ]
+    
+    setProducts(mockProducts)
+    setStep(3)
+  }
+
   const handleProductSelect = (product) => {
     setSelectedProduct(product)
-    setStep(3)
+    setStep(4)
   }
 
   const validateStep3 = () => {
@@ -323,7 +328,7 @@ function ApplicationPage() {
     try {
       // Моковая отправка для демо
       setTimeout(() => {
-        setStep(4)
+        setStep(5)
         setLoading(false)
       }, 1000)
     } catch (error) {
@@ -348,26 +353,34 @@ function ApplicationPage() {
               </div>
               <span className="ml-2 font-semibold hidden md:inline">Анкета</span>
             </div>
-            <div className={`flex-1 h-1 mx-4 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
             <div className={`flex items-center ${step >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
                 2
               </div>
-              <span className="ml-2 font-semibold hidden md:inline">Продукты</span>
+              <span className="ml-2 font-semibold hidden md:inline">Скоринг</span>
             </div>
-            <div className={`flex-1 h-1 mx-4 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
             <div className={`flex items-center ${step >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
                 3
               </div>
+              <span className="ml-2 font-semibold hidden md:inline">Продукты</span>
+            </div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 4 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            
+            <div className={`flex items-center ${step >= 4 ? 'text-blue-600' : 'text-gray-400'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 4 ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>
+                4
+              </div>
               <span className="ml-2 font-semibold hidden md:inline">Верификация</span>
             </div>
-            <div className={`flex-1 h-1 mx-4 ${step >= 4 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 5 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
             
-            <div className={`flex items-center ${step >= 4 ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 4 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${step >= 5 ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 5 ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
                 ✓
               </div>
               <span className="ml-2 font-semibold hidden md:inline">Готово</span>
@@ -379,85 +392,74 @@ function ApplicationPage() {
         {step === 1 && (
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 1: Основная информация</h2>
+            
+            {/* Отображение данных из калькулятора */}
+            <div className="bg-blue-50 rounded-lg p-4 mb-6">
+              <h4 className="font-semibold text-blue-800 mb-2">Ваши параметры займа:</h4>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div><span className="font-medium">Сумма:</span> ${formData.amount}</div>
+                <div><span className="font-medium">Срок:</span> {formData.termDays} дней</div>
+                <div><span className="font-medium">Телефон:</span> {formData.phoneNumber}</div>
+                <div><span className="font-medium">Email:</span> {formData.email}</div>
+                <div className="col-span-2"><span className="font-medium">Цель:</span> {formData.loanPurpose}</div>
+              </div>
+            </div>
+
             <form onSubmit={handleStep1Submit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Сумма займа ($) *
-                  </label>
-                  <input
-                    type="number"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleChange}
-                    min="10"
-                    max="10000"
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.amount ? 'border-red-500' : 'border-gray-300'}`}
-                    required
-                  />
-                  {errors.amount && <p className="text-red-500 text-sm mt-1">{errors.amount}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Срок (дни) *
-                  </label>
-                  <input
-                    type="number"
-                    name="termDays"
-                    value={formData.termDays}
-                    onChange={handleChange}
-                    min="1"
-                    max="365"
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.termDays ? 'border-red-500' : 'border-gray-300'}`}
-                    required
-                  />
-                  {errors.termDays && <p className="text-red-500 text-sm mt-1">{errors.termDays}</p>}
-                </div>
-              </div>
-
               <div className="mb-6">
                 <label className="block text-gray-700 font-semibold mb-2">
-                  Номер телефона *
-                </label>
-                <input
-                  type="tel"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  placeholder="+1 (555) 123-4567"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'}`}
-                  required
-                />
-                {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Цель займа *
+                  Страна *
                 </label>
                 <select
-                  name="loanPurpose"
-                  value={formData.loanPurpose}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.loanPurpose ? 'border-red-500' : 'border-gray-300'}`}
+                  name="country"
+                  value={formData.country}
+                  onChange={handleCountryChange}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.country ? 'border-red-500' : 'border-gray-300'}`}
                   required
                 >
-                  <option value="">Выберите цель займа</option>
-                  <option value="Покупка товаров и услуг">🛒 Покупка товаров и услуг</option>
-                  <option value="Медицинские расходы">🏥 Медицинские расходы</option>
-                  <option value="Образование">🎓 Образование</option>
-                  <option value="Ремонт дома/квартиры">🏠 Ремонт дома/квартиры</option>
-                  <option value="Покупка автомобиля">🚗 Покупка автомобиля</option>
-                  <option value="Свадьба">💒 Свадьба</option>
-                  <option value="Отпуск/путешествие">✈️ Отпуск/путешествие</option>
-                  <option value="Бизнес-нужды">💼 Бизнес-нужды</option>
-                  <option value="Погашение других долгов">💳 Погашение других долгов</option>
-                  <option value="Непредвиденные расходы">⚡ Непредвиденные расходы</option>
-                  <option value="Покупка техники">📱 Покупка техники</option>
-                  <option value="Другое">📝 Другое</option>
+                  {Object.entries(countriesAndBanks).map(([code, data]) => (
+                    <option key={code} value={code}>
+                      {data.name}
+                    </option>
+                  ))}
                 </select>
-                {errors.loanPurpose && <p className="text-red-500 text-sm mt-1">{errors.loanPurpose}</p>}
+                {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Название банка *
+                </label>
+                <select
+                  name="bankName"
+                  value={formData.bankName}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.bankName ? 'border-red-500' : 'border-gray-300'}`}
+                  required
+                >
+                  {countriesAndBanks[formData.country]?.banks.map((bank, index) => (
+                    <option key={index} value={bank}>
+                      {bank}
+                    </option>
+                  ))}
+                </select>
+                {errors.bankName && <p className="text-red-500 text-sm mt-1">{errors.bankName}</p>}
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Номер счета *
+                </label>
+                <input
+                  type="text"
+                  name="accountNumber"
+                  value={formData.accountNumber}
+                  onChange={handleChange}
+                  placeholder="Введите номер банковского счета"
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.accountNumber ? 'border-red-500' : 'border-gray-300'}`}
+                  required
+                />
+                {errors.accountNumber && <p className="text-red-500 text-sm mt-1">{errors.accountNumber}</p>}
               </div>
 
               {errors.submit && (
@@ -471,16 +473,73 @@ function ApplicationPage() {
                 disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg text-lg font-semibold transition disabled:opacity-50"
               >
-                {loading ? 'Обработка...' : 'Продолжить →'}
+                {loading ? 'Отправка на рассмотрение...' : 'Отправить на рассмотрение →'}
               </button>
             </form>
           </div>
         )}
 
-        {/* Step 2: Выбор продукта */}
+        {/* Step 2: Скоринг */}
         {step === 2 && (
+          <div className="bg-white rounded-2xl shadow-2xl p-8 text-center">
+            <div className="mb-8">
+              <div className="text-6xl mb-4">🔍</div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Анализ вашей заявки</h2>
+              <p className="text-gray-600 text-lg">
+                Мы анализируем ваши данные и подбираем оптимальные условия займа...
+              </p>
+            </div>
+
+            <div className="bg-blue-50 rounded-lg p-6 mb-8">
+              <h3 className="text-xl font-semibold text-blue-800 mb-4">Проверяем:</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Кредитная история</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Доходы и расходы</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Банковские данные</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Скоринг-модель</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Риск-анализ</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                  <span>Подбор продуктов</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <div className="bg-gray-200 rounded-full h-3 mb-4">
+                <div className="bg-blue-600 h-3 rounded-full animate-pulse" style={{width: '75%'}}></div>
+              </div>
+              <p className="text-gray-600">Анализ завершен на 75%</p>
+            </div>
+
+            <button
+              onClick={handleScoringComplete}
+              className="bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-lg text-lg font-semibold transition"
+            >
+              Продолжить к продуктам →
+            </button>
+          </div>
+        )}
+
+        {/* Step 3: Выбор продукта */}
+        {step === 3 && (
           <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 2: Выберите продукт</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 3: Выберите продукт</h2>
             <p className="text-gray-600 mb-6">На основе вашей заявки мы подобрали следующие варианты:</p>
             
             <div className="space-y-4">
@@ -521,10 +580,10 @@ function ApplicationPage() {
           </div>
         )}
 
-        {/* Step 3: Верификация */}
-        {step === 3 && (
+        {/* Step 4: Верификация */}
+        {step === 4 && (
           <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 3: Верификация счета</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Шаг 4: Верификация счета</h2>
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
               <p className="text-yellow-800">
                 ⚠️ Для верификации вашего банковского счета с него будет списана сумма $1. 
@@ -646,7 +705,7 @@ function ApplicationPage() {
               <div className="flex gap-4">
                 <button
                   type="button"
-                  onClick={() => setStep(2)}
+                  onClick={() => setStep(3)}
                   className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-4 rounded-lg font-semibold transition"
                 >
                   ← Назад
@@ -663,8 +722,8 @@ function ApplicationPage() {
           </div>
         )}
 
-        {/* Step 4: Успех */}
-        {step === 4 && (
+        {/* Step 5: Успех */}
+        {step === 5 && (
           <div className="bg-white rounded-2xl shadow-2xl p-8 text-center">
             <div className="text-6xl mb-6">🎉</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Заявка успешно отправлена!</h2>
