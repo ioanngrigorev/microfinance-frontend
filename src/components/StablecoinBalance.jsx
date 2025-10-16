@@ -1,133 +1,56 @@
-import React, { useState, useEffect } from 'react'
-import { useMoralis } from 'react-moralis'
-import { stablecoinContracts, erc20ABI } from '../config/moralis'
+import React, { useState, useEffect } from 'react';
 
-const StablecoinBalance = ({ walletAddress }) => {
-  const { Moralis } = useMoralis()
-  const [balances, setBalances] = useState({
-    USDC: '0',
-    USDT: '0'
-  })
-  const [loading, setLoading] = useState(true)
+function StablecoinBalance({ walletAddress }) {
+  const [balance, setBalance] = useState('0');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (walletAddress && Moralis) {
-      fetchBalances()
+    if (walletAddress) {
+      fetchBalance();
     }
-  }, [walletAddress, Moralis])
+  }, [walletAddress]);
 
-  const fetchBalances = async () => {
-    if (!walletAddress || !Moralis) return
-
-    setLoading(true)
+  const fetchBalance = async () => {
+    setLoading(true);
     try {
-      // Получаем баланс USDC
-      const usdcBalance = await Moralis.Web3API.account.getTokenBalances({
-        address: walletAddress,
-        chain: 'eth',
-        token_addresses: [stablecoinContracts.USDC]
-      })
-
-      // Получаем баланс USDT
-      const usdtBalance = await Moralis.Web3API.account.getTokenBalances({
-        address: walletAddress,
-        chain: 'eth',
-        token_addresses: [stablecoinContracts.USDT]
-      })
-
-      setBalances({
-        USDC: usdcBalance[0]?.balance || '0',
-        USDT: usdtBalance[0]?.balance || '0'
-      })
+      // Симуляция получения баланса
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const mockBalance = (Math.random() * 1000).toFixed(2);
+      setBalance(mockBalance);
     } catch (error) {
-      console.error('Ошибка получения баланса:', error)
+      console.error('Ошибка получения баланса:', error);
+      setBalance('0');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const formatBalance = (balance, decimals = 6) => {
-    if (!balance || balance === '0') return '0.00'
-    return (parseFloat(balance) / Math.pow(10, decimals)).toFixed(2)
-  }
-
-  if (loading) {
+  if (!walletAddress) {
     return (
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Баланс стейблкоинов
-        </h3>
-        <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-        </div>
+        <h3 className="text-lg font-semibold mb-2">Баланс стейблкоинов</h3>
+        <p className="text-gray-500">Подключите кошелек для просмотра баланса</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
-          Баланс стейблкоинов
-        </h3>
-        <button
-          onClick={fetchBalances}
-          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-        >
-          Обновить
-        </button>
-      </div>
-      
-      <div className="space-y-4">
-        <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">$</span>
-            </div>
-            <div>
-              <p className="font-semibold text-gray-900">USDC</p>
-              <p className="text-sm text-gray-600">USD Coin</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-lg font-bold text-gray-900">
-              {formatBalance(balances.USDC)} USDC
-            </p>
-            <p className="text-sm text-gray-600">
-              ≈ ${formatBalance(balances.USDC)} USD
-            </p>
-          </div>
+      <h3 className="text-lg font-semibold mb-2">Баланс стейблкоинов</h3>
+      {loading ? (
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/2"></div>
         </div>
-        
-        <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">₮</span>
-            </div>
-            <div>
-              <p className="font-semibold text-gray-900">USDT</p>
-              <p className="text-sm text-gray-600">Tether USD</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-lg font-bold text-gray-900">
-              {formatBalance(balances.USDT)} USDT
-            </p>
-            <p className="text-sm text-gray-600">
-              ≈ ${formatBalance(balances.USDT)} USD
-            </p>
-          </div>
-        </div>
-        
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-          <p className="text-sm text-gray-600">
-            💡 Стейблкоины привязаны к доллару США и имеют стабильную стоимость
+      ) : (
+        <div>
+          <p className="text-2xl font-bold text-blue-700">${balance} USDC</p>
+          <p className="text-sm text-gray-600 mt-1">
+            Демо-версия: случайный баланс
           </p>
         </div>
-      </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default StablecoinBalance
+export default StablecoinBalance;

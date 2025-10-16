@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { useMoralis } from 'react-moralis'
 import { useApplication } from '../context/ApplicationContext'
 import WalletManager from '../components/WalletManager'
 import StablecoinBalance from '../components/StablecoinBalance'
 import LoanDisbursement from '../components/LoanDisbursement'
 
 const CryptoWalletPage = () => {
-  const { isAuthenticated, user } = useMoralis()
   const { currentApplication, updateApplicationStatus } = useApplication()
   const [walletAddress, setWalletAddress] = useState('')
   const [selectedLoan, setSelectedLoan] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const handleWalletConnected = (address) => {
     setWalletAddress(address)
+    setIsAuthenticated(!!address)
     // Обновляем заявку с адресом кошелька
     if (currentApplication && currentApplication.status === 'APPROVED') {
       updateApplicationStatus(currentApplication.phoneNumber, 'APPROVED', 'Кошелек подключен')
@@ -29,6 +29,7 @@ const CryptoWalletPage = () => {
 
   const handleWalletCreated = (address) => {
     setWalletAddress(address)
+    setIsAuthenticated(true)
   }
 
   const handleDisbursementComplete = (txHash, token, amount) => {
