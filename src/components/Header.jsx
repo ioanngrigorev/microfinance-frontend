@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 function Header() {
   const location = useLocation()
+  // Force rebuild
 
   const isActive = (path) => {
     return location.pathname === path ? 'text-purple-600 bg-purple-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
