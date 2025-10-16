@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { useApplication } from '../context/ApplicationContext'
 import WalletManager from '../components/WalletManager'
 import StablecoinBalance from '../components/StablecoinBalance'
 import LoanDisbursement from '../components/LoanDisbursement'
 import ApplicationStatus from '../components/ApplicationStatus'
 
 function WalletPage() {
-  const { currentApplication, updateApplicationStatus, updatePaymentStatus } = useApplication()
   const [walletAddress, setWalletAddress] = useState('')
   const [selectedLoan, setSelectedLoan] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -14,18 +12,9 @@ function WalletPage() {
   const [showApplicationStatus, setShowApplicationStatus] = useState(false)
   const [activeTab, setActiveTab] = useState('wallet') // 'wallet' или 'applications'
 
-  const handleWalletConnected = async (address) => {
+  const handleWalletConnected = (address) => {
     setWalletAddress(address)
     setIsAuthenticated(!!address)
-    
-    // Обновляем статус на PAID при подключении кошелька
-    if (address && currentApplication) {
-      try {
-        await updatePaymentStatus(currentApplication.phoneNumber, true, address)
-      } catch (error) {
-        console.error('Ошибка обновления статуса оплаты:', error)
-      }
-    }
   }
 
   const handleWalletCreated = (address) => {
@@ -34,10 +23,7 @@ function WalletPage() {
   }
 
   const handleLoanDisbursement = async (loanAmount) => {
-    // После успешной выдачи займа обновляем статус
-    if (currentApplication) {
-      await updateApplicationStatus(currentApplication.phoneNumber, 'DISBURSED', 'Средства выданы на кошелек')
-    }
+    console.log('Займ выдан:', loanAmount)
   }
 
   const handleCheckApplication = () => {
@@ -197,7 +183,7 @@ function WalletPage() {
                     type="tel"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="+7 (999) 123-45-67"
+                    placeholder="+7XXXXXXXXXX"
                     className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <button
@@ -256,10 +242,34 @@ function WalletPage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Статусы заявок</h2>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
+                    <span className="text-2xl">📱</span>
+                    <div>
+                      <h3 className="font-semibold text-blue-600">Зарегистрирован</h3>
+                      <p className="text-sm text-gray-600">Пользователь ввел номер телефона</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">📋</span>
+                    <div>
+                      <h3 className="font-semibold text-purple-600">Заявка подана</h3>
+                      <p className="text-sm text-gray-600">Выбрал продукт и подал заявку</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">💳</span>
+                    <div>
+                      <h3 className="font-semibold text-green-600">Оплачено</h3>
+                      <p className="text-sm text-gray-600">Оплатил и создал крипто счет</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
                     <span className="text-2xl">⏳</span>
                     <div>
-                      <h3 className="font-semibold text-yellow-600">Ожидает верификации</h3>
-                      <p className="text-sm text-gray-600">Заявка подана и ожидает рассмотрения администратором</p>
+                      <h3 className="font-semibold text-yellow-600">На рассмотрении</h3>
+                      <p className="text-sm text-gray-600">Заявка рассматривается системой</p>
                     </div>
                   </div>
                   
@@ -267,7 +277,7 @@ function WalletPage() {
                     <span className="text-2xl">✅</span>
                     <div>
                       <h3 className="font-semibold text-green-600">Одобрена</h3>
-                      <p className="text-sm text-gray-600">Заявка одобрена, можно подключать кошелек для получения средств</p>
+                      <p className="text-sm text-gray-600">Заявка одобрена системой</p>
                     </div>
                   </div>
                   
@@ -275,15 +285,7 @@ function WalletPage() {
                     <span className="text-2xl">❌</span>
                     <div>
                       <h3 className="font-semibold text-red-600">Отклонена</h3>
-                      <p className="text-sm text-gray-600">Заявка отклонена, проверьте комментарии администратора</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <span className="text-2xl">💰</span>
-                    <div>
-                      <h3 className="font-semibold text-blue-600">Средства выданы</h3>
-                      <p className="text-sm text-gray-600">Займ переведен на ваш крипто кошелек</p>
+                      <p className="text-sm text-gray-600">Заявка отклонена системой</p>
                     </div>
                   </div>
                 </div>
