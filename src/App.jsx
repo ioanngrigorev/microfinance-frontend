@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { MoralisProvider } from 'react-moralis'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -8,24 +9,35 @@ import ApplicationPage from './pages/ApplicationPage'
 import AdminPage from './pages/AdminPage'
 import PersonalAccountPage from './pages/PersonalAccountPage'
 import CryptoAccountPage from './pages/CryptoAccountPage'
+import CryptoWalletPage from './pages/CryptoWalletPage'
+import WalletManager from './components/WalletManager'
+import StablecoinBalance from './components/StablecoinBalance'
+import LoanDisbursement from './components/LoanDisbursement'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/calculator" element={<CalculatorPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/application" element={<ApplicationPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/personal-account" element={<PersonalAccountPage />} />
-          <Route path="/crypto-account" element={<CryptoAccountPage />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <MoralisProvider
+      appId={process.env.REACT_APP_MORALIS_APP_ID || 'your_moralis_app_id_here'}
+      serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL || 'your_moralis_server_url_here'}
+      initializeOnMount={true}
+    >
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/application" element={<ApplicationPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/personal-account" element={<PersonalAccountPage />} />
+            <Route path="/crypto-account" element={<CryptoAccountPage />} />
+            <Route path="/crypto-wallet" element={<CryptoWalletPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </MoralisProvider>
   )
 }
 
