@@ -24,9 +24,41 @@ const ApplicationStatus = ({ phoneNumber }) => {
 
   const getStatusInfo = (status) => {
     switch (status) {
-      case 'PENDING_VERIFICATION':
+      case 'REGISTERED':
         return {
-          text: 'Ожидает верификации',
+          text: 'Зарегистрирован',
+          color: 'text-blue-600',
+          bgColor: 'bg-blue-50',
+          borderColor: 'border-blue-200',
+          icon: '📱'
+        }
+      case 'SUBMITTED':
+        return {
+          text: 'Заявка подана',
+          color: 'text-purple-600',
+          bgColor: 'bg-purple-50',
+          borderColor: 'border-purple-200',
+          icon: '📋'
+        }
+      case 'PAID':
+        return {
+          text: 'Оплачено',
+          color: 'text-green-600',
+          bgColor: 'bg-green-50',
+          borderColor: 'border-green-200',
+          icon: '💳'
+        }
+      case 'UNPAID':
+        return {
+          text: 'Не оплачено',
+          color: 'text-orange-600',
+          bgColor: 'bg-orange-50',
+          borderColor: 'border-orange-200',
+          icon: '⏰'
+        }
+      case 'UND':
+        return {
+          text: 'На рассмотрении',
           color: 'text-yellow-600',
           bgColor: 'bg-yellow-50',
           borderColor: 'border-yellow-200',
@@ -47,14 +79,6 @@ const ApplicationStatus = ({ phoneNumber }) => {
           bgColor: 'bg-red-50',
           borderColor: 'border-red-200',
           icon: '❌'
-        }
-      case 'DISBURSED':
-        return {
-          text: 'Средства выданы',
-          color: 'text-blue-600',
-          bgColor: 'bg-blue-50',
-          borderColor: 'border-blue-200',
-          icon: '💰'
         }
       default:
         return {

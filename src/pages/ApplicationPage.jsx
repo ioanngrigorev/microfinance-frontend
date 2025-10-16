@@ -35,7 +35,7 @@ function ApplicationPage() {
     setLoading(true)
     
     try {
-      // Создаем заявку в бэкенде
+      // Создаем заявку в бэкенде (статус изменится на SUBMITTED)
       await createApplication({
         phoneNumber: formData.phoneNumber,
         amount: product.amount,

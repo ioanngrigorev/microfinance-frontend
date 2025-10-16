@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useApplication } from '../context/ApplicationContext'
 
 function HomePage() {
+  const { registerUser } = useApplication()
   const [amount, setAmount] = useState(1000)
   const [term, setTerm] = useState(12)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [phoneError, setPhoneError] = useState('')
+  const [isRegistering, setIsRegistering] = useState(false)
 
   const calculatePayment = () => {
     const interestRate = 10 // 10% годовых
@@ -39,7 +42,7 @@ function HomePage() {
     if (phoneError) setPhoneError('')
   }
 
-  const handleGetMoney = () => {
+  const handleGetMoney = async () => {
     if (!phoneNumber.trim()) {
       setPhoneError('Пожалуйста, введите номер телефона')
       return
@@ -52,9 +55,21 @@ function HomePage() {
       return
     }
     
+    setIsRegistering(true)
     setPhoneError('')
-    // Переход на страницу анкеты
-    window.location.href = `/application?amount=${amount}&term=${term}&phone=${encodeURIComponent(phoneNumber)}`
+    
+    try {
+      // Регистрируем пользователя со статусом REGISTERED
+      await registerUser(phoneNumber)
+      
+      // Переход на страницу анкеты
+      window.location.href = `/application?amount=${amount}&term=${term}&phone=${encodeURIComponent(phoneNumber)}`
+    } catch (error) {
+      setPhoneError('Ошибка регистрации. Попробуйте еще раз.')
+      console.error('Ошибка регистрации пользователя:', error)
+    } finally {
+      setIsRegistering(false)
+    }
   }
 
   return (
@@ -100,9 +115,10 @@ function HomePage() {
                 </div>
                 <button
                   onClick={handleGetMoney}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition"
+                  disabled={isRegistering}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-8 py-3 rounded-lg text-lg font-semibold transition"
                 >
-                  Получить деньги →
+                  {isRegistering ? 'Регистрация...' : 'Получить деньги →'}
                 </button>
               </div>
             </div>

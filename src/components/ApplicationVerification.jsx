@@ -56,14 +56,20 @@ const ApplicationVerification = () => {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'PENDING_VERIFICATION':
-        return <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Ожидает верификации</span>
+      case 'REGISTERED':
+        return <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Зарегистрирован</span>
+      case 'SUBMITTED':
+        return <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Заявка подана</span>
+      case 'PAID':
+        return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Оплачено</span>
+      case 'UNPAID':
+        return <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">Не оплачено</span>
+      case 'UND':
+        return <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">На рассмотрении</span>
       case 'APPROVED':
         return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Одобрена</span>
       case 'REJECTED':
         return <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Отклонена</span>
-      case 'DISBURSED':
-        return <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Средства выданы</span>
       default:
         return <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">Неизвестно</span>
     }

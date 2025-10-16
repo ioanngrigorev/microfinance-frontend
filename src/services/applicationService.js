@@ -3,8 +3,84 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api
 
 // Mock данные для демонстрации
 const mockApplications = new Map()
+const mockUsers = new Map()
+
+// Статусы пользователей и заявок
+const USER_STATUS = {
+  REGISTERED: 'REGISTERED',     // Пользователь ввел номер телефона
+  SUBMITTED: 'SUBMITTED',       // Выбрал продукт и подал заявку
+  PAID: 'PAID',                 // Оплатил и создал крипто счет
+  UNPAID: 'UNPAID',             // Не оплатил
+  UNDER_REVIEW: 'UND',          // На рассмотрении системой
+  APPROVED: 'APPROVED',         // Одобрено
+  REJECTED: 'REJECTED'          // Отклонено
+}
 
 class ApplicationService {
+  // Регистрация пользователя (при вводе номера телефона)
+  async registerUser(phoneNumber) {
+    try {
+      // Симуляция задержки API
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      const user = {
+        phoneNumber,
+        status: USER_STATUS.REGISTERED,
+        registeredAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+      
+      // Сохраняем пользователя
+      mockUsers.set(phoneNumber, user)
+      
+      console.log('Пользователь зарегистрирован:', user)
+      return user
+    } catch (error) {
+      console.error('Ошибка регистрации пользователя:', error)
+      throw error
+    }
+  }
+
+  // Получить пользователя по номеру телефона
+  async getUserByPhone(phoneNumber) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 200))
+      
+      const user = mockUsers.get(phoneNumber)
+      return user || null
+    } catch (error) {
+      console.error('Ошибка получения пользователя:', error)
+      throw error
+    }
+  }
+
+  // Обновить статус пользователя
+  async updateUserStatus(phoneNumber, status, additionalData = {}) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 200))
+      
+      const user = mockUsers.get(phoneNumber)
+      if (!user) {
+        throw new Error('Пользователь не найден')
+      }
+      
+      const updatedUser = {
+        ...user,
+        ...additionalData,
+        status,
+        updatedAt: new Date().toISOString()
+      }
+      
+      mockUsers.set(phoneNumber, updatedUser)
+      
+      console.log('Статус пользователя обновлен:', updatedUser)
+      return updatedUser
+    } catch (error) {
+      console.error('Ошибка обновления статуса пользователя:', error)
+      throw error
+    }
+  }
+
   // Создать новую заявку
   async createApplication(applicationData) {
     try {
@@ -17,14 +93,20 @@ class ApplicationService {
         term: applicationData.term,
         selectedProduct: applicationData.selectedProduct,
         walletAddress: applicationData.walletAddress || null,
-        status: 'PENDING_VERIFICATION',
+        status: USER_STATUS.SUBMITTED,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         adminNotes: ''
       }
       
-      // Сохраняем в mock хранилище
+      // Сохраняем заявку
       mockApplications.set(applicationData.phoneNumber, application)
+      
+      // Обновляем статус пользователя на SUBMITTED
+      await this.updateUserStatus(applicationData.phoneNumber, USER_STATUS.SUBMITTED, {
+        applicationId: applicationData.phoneNumber,
+        selectedProduct: applicationData.selectedProduct
+      })
       
       console.log('Заявка создана (mock):', application)
       return application
@@ -91,10 +173,74 @@ class ApplicationService {
       
       mockApplications.set(phoneNumber, updatedApplication)
       
+      // Обновляем статус пользователя
+      await this.updateUserStatus(phoneNumber, status, {
+        adminNotes,
+        applicationStatus: status
+      })
+      
       console.log('Статус заявки обновлен (mock):', updatedApplication)
       return updatedApplication
     } catch (error) {
       console.error('Ошибка обновления статуса:', error)
+      throw error
+    }
+  }
+
+  // Обновить статус после оплаты и создания кошелька
+  async updatePaymentStatus(phoneNumber, isPaid, walletAddress = null) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      const status = isPaid ? USER_STATUS.PAID : USER_STATUS.UNPAID
+      
+      const updatedUser = await this.updateUserStatus(phoneNumber, status, {
+        walletAddress,
+        paymentDate: isPaid ? new Date().toISOString() : null
+      })
+      
+      // Обновляем заявку
+      const application = mockApplications.get(phoneNumber)
+      if (application) {
+        const updatedApplication = {
+          ...application,
+          walletAddress,
+          status,
+          updatedAt: new Date().toISOString()
+        }
+        mockApplications.set(phoneNumber, updatedApplication)
+      }
+      
+      return updatedUser
+    } catch (error) {
+      console.error('Ошибка обновления статуса оплаты:', error)
+      throw error
+    }
+  }
+
+  // Перевести на рассмотрение (UND)
+  async submitForReview(phoneNumber) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      const updatedUser = await this.updateUserStatus(phoneNumber, USER_STATUS.UNDER_REVIEW, {
+        submittedForReviewAt: new Date().toISOString()
+      })
+      
+      // Обновляем заявку
+      const application = mockApplications.get(phoneNumber)
+      if (application) {
+        const updatedApplication = {
+          ...application,
+          status: USER_STATUS.UNDER_REVIEW,
+          updatedAt: new Date().toISOString()
+        }
+        mockApplications.set(phoneNumber, updatedApplication)
+      }
+      
+      return updatedUser
+    } catch (error) {
+      console.error('Ошибка отправки на рассмотрение:', error)
       throw error
     }
   }

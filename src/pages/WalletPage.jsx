@@ -6,7 +6,7 @@ import LoanDisbursement from '../components/LoanDisbursement'
 import ApplicationStatus from '../components/ApplicationStatus'
 
 function WalletPage() {
-  const { currentApplication, updateApplicationStatus } = useApplication()
+  const { currentApplication, updateApplicationStatus, updatePaymentStatus } = useApplication()
   const [walletAddress, setWalletAddress] = useState('')
   const [selectedLoan, setSelectedLoan] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -14,12 +14,17 @@ function WalletPage() {
   const [showApplicationStatus, setShowApplicationStatus] = useState(false)
   const [activeTab, setActiveTab] = useState('wallet') // 'wallet' или 'applications'
 
-  const handleWalletConnected = (address) => {
+  const handleWalletConnected = async (address) => {
     setWalletAddress(address)
     setIsAuthenticated(!!address)
-    // Обновляем заявку с адресом кошелька
-    if (currentApplication && currentApplication.status === 'APPROVED') {
-      updateApplicationStatus(currentApplication.phoneNumber, 'APPROVED', 'Кошелек подключен')
+    
+    // Обновляем статус на PAID при подключении кошелька
+    if (address && currentApplication) {
+      try {
+        await updatePaymentStatus(currentApplication.phoneNumber, true, address)
+      } catch (error) {
+        console.error('Ошибка обновления статуса оплаты:', error)
+      }
     }
   }
 
