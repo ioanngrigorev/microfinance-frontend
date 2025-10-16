@@ -41,8 +41,8 @@ function HomePage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 py-16">
 
-        {/* Hero Section - Stripe Style */}
-        <div className="relative overflow-hidden animated-gradient-bg rounded-3xl mb-16">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden bg-white border border-gray-200 rounded-3xl mb-16 shadow-lg">
           
           <div className="relative px-12 py-20">
             <div className="max-w-6xl mx-auto">
