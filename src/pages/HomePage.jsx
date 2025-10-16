@@ -7,7 +7,21 @@ function HomePage() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [loanPurpose, setLoanPurpose] = useState('Покупка товаров и услуг')
+  const [heroPhone, setHeroPhone] = useState('')
   const interestRate = 20.0 // 20% годовых
+
+  // Функция форматирования номера телефона
+  const formatPhoneNumber = (value) => {
+    // Удаляем все нецифровые символы кроме +
+    const phoneNumber = value.replace(/[^\d+]/g, '')
+    
+    // Если начинается с +, оставляем как есть, иначе добавляем +
+    if (phoneNumber.startsWith('+')) {
+      return phoneNumber.slice(0, 12) // Максимум 12 символов включая +
+    } else {
+      return '+' + phoneNumber.slice(0, 11) // Максимум 11 цифр + символ +
+    }
+  }
 
   const calculatePayment = () => {
     // 20% годовых = 20/12% в месяц
@@ -59,7 +73,9 @@ function HomePage() {
                   <div className="flex flex-col sm:flex-row gap-4 max-w-md">
                     <input
                       type="tel"
-                      placeholder="Номер телефона"
+                      placeholder="+7 (999) 123-45-67"
+                      value={heroPhone}
+                      onChange={(e) => setHeroPhone(formatPhoneNumber(e.target.value))}
                       maxLength={12}
                       className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     />
@@ -177,41 +193,6 @@ function HomePage() {
                             </div>
                           </div>
 
-                          {/* Stats */}
-                          <div className="bg-white border border-gray-200 rounded-xl p-4">
-                            <h3 className="text-sm font-semibold text-gray-900 mb-3">Статистика</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                              <div className="text-center">
-                                <div className="text-xl font-bold text-gray-900">20%</div>
-                                <div className="text-xs text-gray-600">Годовая ставка</div>
-                              </div>
-                              <div className="text-center">
-                                <div className="text-xl font-bold text-gray-900">24ч</div>
-                                <div className="text-xs text-gray-600">На одобрение</div>
-          </div>
-        </div>
-      </div>
-
-                          {/* Recent activity */}
-                          <div className="bg-white border border-gray-200 rounded-xl p-4">
-                            <h3 className="text-sm font-semibold text-gray-900 mb-3">Последние операции</h3>
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between text-xs">
-                                <div className="flex items-center space-x-2">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                  <span className="text-gray-600">Одобрен займ</span>
-                                </div>
-                                <span className="text-gray-900 font-medium">+$2,500</span>
-                              </div>
-                              <div className="flex items-center justify-between text-xs">
-                                <div className="flex items-center space-x-2">
-                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                  <span className="text-gray-600">Создан кошелек</span>
-                                </div>
-                                <span className="text-gray-900 font-medium">USDT</span>
-                              </div>
-                            </div>
-        </div>
         </div>
         </div>
       </div>
