@@ -75,6 +75,7 @@ function HomePage() {
                       value={heroPhone}
                       onChange={(e) => setHeroPhone(formatPhoneNumber(e.target.value))}
                       maxLength={12}
+                      required
                       className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     />
                     <Link 

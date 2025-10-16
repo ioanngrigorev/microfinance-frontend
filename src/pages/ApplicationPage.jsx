@@ -105,7 +105,7 @@ function ApplicationPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <h1 className="text-4xl font-bold text-gray-900 text-center mb-8">
             Заявка на займ
           </h1>
@@ -145,7 +145,7 @@ function ApplicationPage() {
 
 
 
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Предварительно одобренные продукты</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Поздравляем! Вам предварительно одобрены следующие продукты.</h2>
               <p className="text-gray-600 text-center mb-8">
                 Выберите один из предложенных продуктов:
               </p>
@@ -218,8 +218,7 @@ function ApplicationPage() {
                     </div>
                   </div>
                 </div>
-                </div>
-              )}
+              </div>
           </div>
         )}
 
