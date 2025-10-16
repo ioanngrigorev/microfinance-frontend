@@ -19,16 +19,10 @@ function Header() {
 
           <div className="flex items-center space-x-3">
             <Link 
-              to="/application" 
-              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
-            >
-              Оформить займ
-            </Link>
-            <Link 
               to="/wallet" 
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/wallet')}`}
             >
-              Кошелек
+              Личный кабинет
             </Link>
             <Link 
               to="/admin" 
