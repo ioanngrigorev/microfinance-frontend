@@ -44,9 +44,6 @@ function HomePage() {
           
           {/* Левая колонка - контент */}
           <div>
-            {/* Логотип */}
-            <h1 className="text-4xl font-bold text-gray-900 mb-8">Human Fintech</h1>
-            
             {/* Баннер */}
             <div className="bg-black text-white rounded-xl p-4 mb-8 inline-block">
               <span className="text-sm">Кредиты без ограничений • Попробуйте сейчас →</span>
