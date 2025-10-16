@@ -24,8 +24,9 @@ function HomePage() {
   }
 
   const calculatePayment = () => {
-    // 20% годовых = 20/12% в месяц
-    const monthlyRate = interestRate / 12
+    // 10% годовых для предварительного расчета
+    const annualRate = 10.0
+    const monthlyRate = annualRate / 12
     const totalInterest = (amount * monthlyRate * term) / 100
     const totalAmount = amount + totalInterest
     return {
@@ -58,15 +59,12 @@ function HomePage() {
                   
                   {/* Main headline */}
                   <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-                    Финансовая инфраструктура
-                    <br />
-                    <span className="text-gray-700">для роста вашего дохода</span>
+                    Кредиты в стейблкоинах
           </h1>
                   
                   {/* Description */}
                   <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
-                    Присоединяйтесь к тысячам клиентов, которые используют Human Fintech для получения кредитов в стейблкоинах, 
-                    создания крипто-кошельков, управления финансами и построения более прибыльного бизнеса.
+                    Human Fintech помогает частным клиентам получать займы в стабильной цифровой валюте за минуты, без бюрократии и границ.
                   </p>
                   
                   {/* Phone input and CTA */}
@@ -96,7 +94,7 @@ function HomePage() {
                 <div className="relative flex justify-center">
                   <div className="relative">
                     {/* Mobile phone frame */}
-                    <div className="w-80 h-[700px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl">
+                    <div className="w-96 h-[700px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl">
                       <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden">
                         
                         {/* Status bar */}
@@ -138,15 +136,15 @@ function HomePage() {
                               </div>
                               <input
                                 type="range"
-                                min="10"
+                                min="100"
                                 max="10000"
-                                step="10"
+                                step="100"
                                 value={amount}
                                 onChange={(e) => setAmount(Number(e.target.value))}
                                 className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
                               />
                               <div className="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>$10</span>
+                                <span>$100</span>
                                 <span>$10,000</span>
                               </div>
                             </div>
@@ -164,7 +162,7 @@ function HomePage() {
                               <input
                                 type="range"
                                 min="1"
-                                max="36"
+                                max="12"
                                 step="1"
                                 value={term}
                                 onChange={(e) => setTerm(Number(e.target.value))}
@@ -172,7 +170,7 @@ function HomePage() {
                               />
                               <div className="flex justify-between text-xs text-gray-500 mt-1">
                                 <span>1 месяц</span>
-                                <span>36 месяцев</span>
+                                <span>12 месяцев</span>
                               </div>
                             </div>
                           </div>
@@ -182,7 +180,7 @@ function HomePage() {
                             <div className="text-center">
                               <div className="text-sm font-medium text-gray-700 mb-2">К возврату</div>
                               <div className="text-3xl font-bold text-green-600 mb-2">
-                                ${(amount * 1.10).toFixed(2)}
+                                ${payment.totalAmount}
                               </div>
                               <div className="text-xs text-gray-600 mb-2">
                                 При ставке 10% годовых

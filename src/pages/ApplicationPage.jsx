@@ -153,7 +153,7 @@ function ApplicationPage() {
                 {/* Продукты */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   <div 
-                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
+                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
                     onClick={() => handleProductSelect({
                       id: 1,
                       name: 'Экспресс займ',
@@ -164,18 +164,18 @@ function ApplicationPage() {
                       description: 'Быстрое одобрение, минимальные требования'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-blue-300 mb-3">Экспресс займ</h4>
-                    <p className="text-white/80 mb-4">Быстрое одобрение, минимальные требования</p>
-                    <div className="space-y-2 text-sm text-white/90">
+                    <h4 className="text-xl font-bold text-blue-600 mb-3">Экспресс займ</h4>
+                    <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
+                    <div className="space-y-2 text-sm text-gray-700">
                       <p><span className="font-semibold">Сумма:</span> $500</p>
                       <p><span className="font-semibold">Срок:</span> 1 месяц</p>
                       <p><span className="font-semibold">Ставка:</span> 40% годовых</p>
-                      <p className="text-lg font-bold text-green-300">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
                     </div>
                   </div>
 
                   <div 
-                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
+                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
                     onClick={() => handleProductSelect({
                       id: 2,
                       name: 'Стандартный займ',
@@ -186,18 +186,18 @@ function ApplicationPage() {
                       description: 'Оптимальные условия, подходит для большинства'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-green-300 mb-3">Стандартный займ</h4>
-                    <p className="text-white/80 mb-4">Оптимальные условия, подходит для большинства</p>
-                    <div className="space-y-2 text-sm text-white/90">
+                    <h4 className="text-xl font-bold text-blue-600 mb-3">Стандартный займ</h4>
+                    <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
+                    <div className="space-y-2 text-sm text-gray-700">
                       <p><span className="font-semibold">Сумма:</span> $2,500</p>
                       <p><span className="font-semibold">Срок:</span> 6 месяцев</p>
                       <p><span className="font-semibold">Ставка:</span> 30% годовых</p>
-                      <p className="text-lg font-bold text-green-300">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
                     </div>
               </div>
 
                   <div 
-                    className="bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-6 hover:border-white/50 cursor-pointer transition transform hover:scale-105"
+                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
                     onClick={() => handleProductSelect({
                       id: 3,
                       name: 'Премиум займ',
@@ -208,13 +208,13 @@ function ApplicationPage() {
                       description: 'Выгодные условия для постоянных клиентов'
                     })}
                   >
-                    <h4 className="text-xl font-bold text-purple-300 mb-3">Премиум займ</h4>
-                    <p className="text-white/80 mb-4">Выгодные условия для постоянных клиентов</p>
-                    <div className="space-y-2 text-sm text-white/90">
+                    <h4 className="text-xl font-bold text-blue-600 mb-3">Премиум займ</h4>
+                    <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
+                    <div className="space-y-2 text-sm text-gray-700">
                       <p><span className="font-semibold">Сумма:</span> $4,800</p>
                       <p><span className="font-semibold">Срок:</span> 12 месяцев</p>
                       <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-300">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-green-600">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
                     </div>
                   </div>
                 </div>
