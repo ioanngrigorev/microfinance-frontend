@@ -168,23 +168,6 @@ function HomePage() {
                               </div>
                             </div>
                           </div>
-                          
-                          {/* Quick actions */}
-                          <div className="space-y-3">
-            <Link 
-              to="/application" 
-              state={{ 
-                amount, 
-                term
-              }}
-                              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-colors block text-center"
-                            >
-                              Получить деньги
-            </Link>
-                            <button className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-xl text-sm font-semibold">
-                              История
-                            </button>
-                          </div>
 
                           {/* Stats */}
                           <div className="bg-white border border-gray-200 rounded-xl p-4">
