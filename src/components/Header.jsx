@@ -25,16 +25,10 @@ function Header() {
               Оформить займ
             </Link>
             <Link 
-              to="/crypto-wallet" 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/crypto-wallet')}`}
+              to="/wallet" 
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/wallet')}`}
             >
-              Крипто кошелек
-            </Link>
-            <Link 
-              to="/personal-account" 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive('/personal-account')}`}
-            >
-              Личный кабинет
+              Кошелек
             </Link>
             <Link 
               to="/admin" 
