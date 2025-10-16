@@ -55,16 +55,24 @@ function HomePage() {
                     создания крипто-кошельков, управления финансами и построения более прибыльного бизнеса.
                   </p>
                   
-                  {/* Email input and CTA */}
+                  {/* Phone input and CTA */}
                   <div className="flex flex-col sm:flex-row gap-4 max-w-md">
                     <input
-                      type="email"
-                      placeholder="Email адрес"
+                      type="tel"
+                      placeholder="Номер телефона"
+                      maxLength={12}
                       className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     />
-                    <button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors whitespace-nowrap">
-                      Начать сейчас →
-                    </button>
+                    <Link 
+                      to="/application"
+                      state={{ 
+                        amount: 1000, 
+                        term: 12
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors whitespace-nowrap text-center"
+                    >
+                      Получить деньги →
+                    </Link>
                   </div>
                 </div>
                 
