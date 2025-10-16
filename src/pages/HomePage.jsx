@@ -4,7 +4,8 @@ import { useState } from 'react'
 function HomePage() {
   const [amount, setAmount] = useState(1000)
   const [term, setTerm] = useState(12)
-  const [phoneNumber, setPhoneNumber] = useState('+7 (999) 123-45-67')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [phoneError, setPhoneError] = useState('')
 
   const calculatePayment = () => {
     const interestRate = 10 // 10% годовых
@@ -17,6 +18,24 @@ function HomePage() {
   }
 
   const payment = calculatePayment()
+
+  const handleGetMoney = () => {
+    if (!phoneNumber.trim()) {
+      setPhoneError('Пожалуйста, введите номер телефона')
+      return
+    }
+    
+    // Простая валидация номера телефона
+    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/
+    if (!phoneRegex.test(phoneNumber)) {
+      setPhoneError('Пожалуйста, введите корректный номер телефона')
+      return
+    }
+    
+    setPhoneError('')
+    // Переход на страницу анкеты
+    window.location.href = `/application?amount=${amount}&term=${term}&phone=${encodeURIComponent(phoneNumber)}`
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -44,25 +63,33 @@ function HomePage() {
             </p>
             
             {/* Форма */}
-            <div className="flex gap-4">
-              <input
-                type="tel"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="+7 (999) 123-45-67"
-              />
-              <Link 
-                to="/application" 
-                state={{ 
-                  amount, 
-                  term, 
-                  phoneNumber
-                }}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition"
-              >
-                Получить деньги →
-              </Link>
+            <div>
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      setPhoneNumber(e.target.value)
+                      if (phoneError) setPhoneError('')
+                    }}
+                    className={`w-full px-4 py-3 border rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      phoneError ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="+7 (999) 123-45-67"
+                    required
+                  />
+                  {phoneError && (
+                    <p className="text-red-500 text-sm mt-2">{phoneError}</p>
+                  )}
+                </div>
+                <button
+                  onClick={handleGetMoney}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition"
+                >
+                  Получить деньги →
+                </button>
+              </div>
             </div>
           </div>
 
