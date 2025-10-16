@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import { MoralisProvider } from 'react-moralis'
 import { ApplicationProvider } from './context/ApplicationContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -11,9 +10,6 @@ import AdminPage from './pages/AdminPage'
 import PersonalAccountPage from './pages/PersonalAccountPage'
 import CryptoAccountPage from './pages/CryptoAccountPage'
 import CryptoWalletPage from './pages/CryptoWalletPage'
-import WalletManager from './components/WalletManager'
-import StablecoinBalance from './components/StablecoinBalance'
-import LoanDisbursement from './components/LoanDisbursement'
 
 function App() {
   return (
