@@ -463,7 +463,7 @@ function ApplicationPage() {
                   Средства будут переведены на ваш крипто-счет в течение 24 часов.
                 </p>
                 <button
-                  onClick={() => navigate('/personal-account')}
+                  onClick={() => navigate(`/wallet?phone=${encodeURIComponent(formData.phoneNumber)}&tab=applications`)}
                   className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
                 >
                   Перейти в личный кабинет

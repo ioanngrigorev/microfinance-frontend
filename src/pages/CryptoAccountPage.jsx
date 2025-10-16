@@ -208,7 +208,7 @@ function CryptoAccountPage() {
 
             <div className="flex gap-4 justify-center">
               <button
-                onClick={() => navigate('/personal-account')}
+                onClick={() => navigate('/wallet')}
                 className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition"
               >
                 Перейти в личный кабинет
