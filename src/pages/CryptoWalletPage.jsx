@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useMoralis } from 'react-moralis'
+import { useApplication } from '../context/ApplicationContext'
 import WalletManager from '../components/WalletManager'
 import StablecoinBalance from '../components/StablecoinBalance'
 import LoanDisbursement from '../components/LoanDisbursement'
 
 const CryptoWalletPage = () => {
   const { isAuthenticated, user } = useMoralis()
+  const { currentApplication, updateApplicationStatus } = useApplication()
   const [walletAddress, setWalletAddress] = useState('')
   const [selectedLoan, setSelectedLoan] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const handleWalletConnected = (address) => {
     setWalletAddress(address)
+    // Обновляем заявку с адресом кошелька
+    if (currentApplication && currentApplication.status === 'APPROVED') {
+      updateApplicationStatus(currentApplication.phoneNumber, 'APPROVED', 'Кошелек подключен')
+    }
+  }
+
+  const handleLoanDisbursement = async (loanAmount) => {
+    // После успешной выдачи займа обновляем статус
+    if (currentApplication) {
+      await updateApplicationStatus(currentApplication.phoneNumber, 'DISBURSED', 'Средства выданы на кошелек')
+    }
   }
 
   const handleWalletCreated = (address) => {
@@ -115,7 +129,7 @@ const CryptoWalletPage = () => {
                       loanAmount={selectedLoan.amount}
                       loanTerm={selectedLoan.term}
                       walletAddress={walletAddress}
-                      onDisbursementComplete={handleDisbursementComplete}
+                      onDisbursementComplete={handleLoanDisbursement}
                     />
                   )}
                 </>

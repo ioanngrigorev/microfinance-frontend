@@ -1,201 +1,128 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ApplicationStatus from '../components/ApplicationStatus'
 
 function PersonalAccountPage() {
-  // Mock data for demonstration
-  const personalData = {
-    firstName: 'Иван',
-    lastName: 'Иванов',
-    email: 'ivan@example.com',
-    phoneNumber: '+1 (555) 123-4567',
-    country: 'US',
-    bankName: 'Bank of America',
-    accountNumber: '1234567890'
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [showApplicationStatus, setShowApplicationStatus] = useState(false)
+
+  const handleCheckApplication = () => {
+    if (phoneNumber.trim()) {
+      setShowApplicationStatus(true)
+    }
   }
 
-  const applications = [
-    {
-      id: 'app_001',
-      amount: 1000,
-      termDays: 30,
-      status: 'Approved',
-      loanPurpose: 'Покупка товаров и услуг',
-      createdAt: '2023-10-26',
-      approvedAt: '2023-10-27',
-      totalToRepay: 1600,
-      repaid: 0,
-      nextPaymentDate: '2023-11-26',
-      nextPaymentAmount: 1600
-    },
-    {
-      id: 'app_002',
-      amount: 500,
-      termDays: 14,
-      status: 'Completed',
-      loanPurpose: 'Медицинские расходы',
-      createdAt: '2023-09-10',
-      approvedAt: '2023-09-11',
-      totalToRepay: 700,
-      repaid: 700,
-      nextPaymentDate: null,
-      nextPaymentAmount: null
-    }
-  ]
-
-  const paymentSchedule = [
-    { date: '2023-11-26', amount: 1600, status: 'Pending' }
-  ]
-
-  const repaymentHistory = [
-    { date: '2023-09-25', amount: 700, loanId: 'app_002', status: 'Paid' }
-  ]
-
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h2 className="text-4xl font-bold text-gray-800 text-center mb-10">
-        Личный Кабинет 👤
-      </h2>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">Личный кабинет</h1>
+          
+          <div className="space-y-8">
+            {/* Проверка заявки */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Проверить статус заявки</h2>
+              <p className="text-gray-600 mb-4">
+                Введите номер телефона, который вы использовали при подаче заявки
+              </p>
+              
+              <div className="flex gap-4">
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="+7 (999) 123-45-67"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <button
+                  onClick={handleCheckApplication}
+                  disabled={!phoneNumber.trim()}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  Проверить
+                </button>
+              </div>
+            </div>
 
-      {/* Personal Data */}
-      <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">Персональные данные</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg text-gray-700">
-          <p><span className="font-semibold">Имя:</span> {personalData.firstName}</p>
-          <p><span className="font-semibold">Фамилия:</span> {personalData.lastName}</p>
-          <p><span className="font-semibold">Email:</span> {personalData.email}</p>
-          <p><span className="font-semibold">Телефон:</span> {personalData.phoneNumber}</p>
-          <p><span className="font-semibold">Страна:</span> {personalData.country}</p>
-          <p><span className="font-semibold">Банк:</span> {personalData.bankName}</p>
-          <p><span className="font-semibold">Номер счета:</span> {personalData.accountNumber}</p>
+            {/* Статус заявки */}
+            {showApplicationStatus && (
+              <ApplicationStatus phoneNumber={phoneNumber} />
+            )}
+
+            {/* Информация о системе */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">О системе</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">📱</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Простая подача</h3>
+                  <p className="text-gray-600 text-sm">
+                    Подайте заявку за несколько минут, указав только номер телефона
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">⚡</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Быстрое рассмотрение</h3>
+                  <p className="text-gray-600 text-sm">
+                    Наши специалисты рассмотрят заявку в течение 24 часов
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">💰</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Крипто займы</h3>
+                  <p className="text-gray-600 text-sm">
+                    Получайте займы в стейблкоинах прямо на ваш кошелек
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Статусы заявок */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Статусы заявок</h2>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">⏳</span>
+                  <div>
+                    <h3 className="font-semibold text-yellow-600">Ожидает верификации</h3>
+                    <p className="text-sm text-gray-600">Заявка подана и ожидает рассмотрения администратором</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">✅</span>
+                  <div>
+                    <h3 className="font-semibold text-green-600">Одобрена</h3>
+                    <p className="text-sm text-gray-600">Заявка одобрена, можно подключать кошелек для получения средств</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">❌</span>
+                  <div>
+                    <h3 className="font-semibold text-red-600">Отклонена</h3>
+                    <p className="text-sm text-gray-600">Заявка отклонена, проверьте комментарии администратора</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">💰</span>
+                  <div>
+                    <h3 className="font-semibold text-blue-600">Средства выданы</h3>
+                    <p className="text-sm text-gray-600">Займ переведен на ваш крипто кошелек</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Loan Applications & History */}
-      <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">Мои заявки и история займов</h3>
-        {applications.length === 0 ? (
-          <p className="text-gray-600 text-center">У вас пока нет активных или завершенных заявок.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">ID</th>
-                  <th className="py-3 px-6 text-left">Сумма</th>
-                  <th className="py-3 px-6 text-left">Срок</th>
-                  <th className="py-3 px-6 text-left">Цель</th>
-                  <th className="py-3 px-6 text-left">Статус</th>
-                  <th className="py-3 px-6 text-left">К возврату</th>
-                  <th className="py-3 px-6 text-left">Погашено</th>
-                  <th className="py-3 px-6 text-left">Дата заявки</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {applications.map(app => (
-                  <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-6 text-left whitespace-nowrap">{app.id}</td>
-                    <td className="py-3 px-6 text-left">${app.amount}</td>
-                    <td className="py-3 px-6 text-left">{app.termDays} дней</td>
-                    <td className="py-3 px-6 text-left">{app.loanPurpose}</td>
-                    <td className="py-3 px-6 text-left">
-                      <span className={`py-1 px-3 rounded-full text-xs font-semibold ${
-                        app.status === 'Approved' ? 'bg-green-200 text-green-800' :
-                        app.status === 'Completed' ? 'bg-blue-200 text-blue-800' :
-                        'bg-gray-200 text-gray-800'
-                      }`}>
-                        {app.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-6 text-left">${app.totalToRepay}</td>
-                    <td className="py-3 px-6 text-left">${app.repaid}</td>
-                    <td className="py-3 px-6 text-left">{app.createdAt}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
-      {/* Payment Schedule */}
-      <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">График платежей</h3>
-        {paymentSchedule.length === 0 ? (
-          <p className="text-gray-600 text-center">Нет предстоящих платежей.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Дата платежа</th>
-                  <th className="py-3 px-6 text-left">Сумма</th>
-                  <th className="py-3 px-6 text-left">Статус</th>
-                  <th className="py-3 px-6 text-left">Действия</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {paymentSchedule.map((payment, index) => (
-                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-6 text-left">{payment.date}</td>
-                    <td className="py-3 px-6 text-left">${payment.amount}</td>
-                    <td className="py-3 px-6 text-left">
-                      <span className={`py-1 px-3 rounded-full text-xs font-semibold ${
-                        payment.status === 'Pending' ? 'bg-orange-200 text-orange-800' :
-                        'bg-gray-200 text-gray-800'
-                      }`}>
-                        {payment.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-6 text-left">
-                      {payment.status === 'Pending' && (
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-lg text-xs transition">
-                          Оплатить
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
-      {/* Repayment Information */}
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">Информация о погашениях</h3>
-        {repaymentHistory.length === 0 ? (
-          <p className="text-gray-600 text-center">История погашений пуста.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Дата погашения</th>
-                  <th className="py-3 px-6 text-left">Сумма</th>
-                  <th className="py-3 px-6 text-left">Займ ID</th>
-                  <th className="py-3 px-6 text-left">Статус</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {repaymentHistory.map((repayment, index) => (
-                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-6 text-left">{repayment.date}</td>
-                    <td className="py-3 px-6 text-left">${repayment.amount}</td>
-                    <td className="py-3 px-6 text-left">{repayment.loanId}</td>
-                    <td className="py-3 px-6 text-left">
-                      <span className={`py-1 px-3 rounded-full text-xs font-semibold ${
-                        repayment.status === 'Paid' ? 'bg-green-200 text-green-800' :
-                        'bg-gray-200 text-gray-800'
-                      }`}>
-                        {repayment.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
       </div>
     </div>
   )

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import AdminStats from '../components/AdminStats'
+import ApplicationVerification from '../components/ApplicationVerification'
 
 function AdminPage() {
   const [applications, setApplications] = useState([])
   const [filter, setFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedApp, setSelectedApp] = useState(null)
+  const [activeTab, setActiveTab] = useState('verification') // 'verification' или 'stats'
 
   // Моковые данные заявок
   const mockApplications = [
@@ -169,11 +171,46 @@ function AdminPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Statistics */}
-        <AdminStats applications={applications} />
+        {/* Tabs */}
+        <div className="bg-white rounded-lg shadow-sm mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="-mb-px flex space-x-8 px-6">
+              <button
+                onClick={() => setActiveTab('verification')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'verification'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Верификация заявок
+              </button>
+              <button
+                onClick={() => setActiveTab('stats')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'stats'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Статистика
+              </button>
+            </nav>
+          </div>
+        </div>
 
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        {/* Tab Content */}
+        {activeTab === 'verification' ? (
+          <ApplicationVerification />
+        ) : (
+          <AdminStats applications={applications} />
+        )}
+
+        {/* Legacy content - можно удалить после тестирования */}
+        {false && (
+          <>
+            {/* Filters */}
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <input
@@ -410,7 +447,9 @@ function AdminPage() {
             </div>
           </div>
         </div>
-      )}
+          </>
+        )}
+      </div>
     </div>
   )
 }

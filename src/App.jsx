@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { MoralisProvider } from 'react-moralis'
+import { ApplicationProvider } from './context/ApplicationContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -21,22 +22,24 @@ function App() {
       serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL || 'https://your-server-url.moralis.io:2053/server'}
       initializeOnMount={true}
     >
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/calculator" element={<CalculatorPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/application" element={<ApplicationPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/personal-account" element={<PersonalAccountPage />} />
-            <Route path="/crypto-account" element={<CryptoAccountPage />} />
-            <Route path="/crypto-wallet" element={<CryptoWalletPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <ApplicationProvider>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/calculator" element={<CalculatorPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/application" element={<ApplicationPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/personal-account" element={<PersonalAccountPage />} />
+              <Route path="/crypto-account" element={<CryptoAccountPage />} />
+              <Route path="/crypto-wallet" element={<CryptoWalletPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </ApplicationProvider>
     </MoralisProvider>
   )
 }

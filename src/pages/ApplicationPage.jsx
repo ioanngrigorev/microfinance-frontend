@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useApplication } from '../context/ApplicationContext'
 
 function ApplicationPage() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { createApplication, currentApplication, isLoading, error } = useApplication()
   
   const [step, setStep] = useState(1) // 1: Предодобрение, 2: Оплата, 3: Рассмотрение
   const [loading, setLoading] = useState(false)
@@ -28,9 +30,27 @@ function ApplicationPage() {
 
   const [errors, setErrors] = useState({})
 
-  const handleProductSelect = (product) => {
+  const handleProductSelect = async (product) => {
     setSelectedProduct(product)
-    setStep(2) // Переход к оплате
+    setLoading(true)
+    
+    try {
+      // Создаем заявку в бэкенде
+      await createApplication({
+        phoneNumber: formData.phoneNumber,
+        amount: product.amount,
+        term: product.term,
+        selectedProduct: product,
+        walletAddress: null, // Будет заполнено при подключении кошелька
+      })
+      
+      setStep(2) // Переход к оплате
+    } catch (err) {
+      console.error('Ошибка создания заявки:', err)
+      // Показываем ошибку пользователю
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleCardDataChange = (e) => {
