@@ -52,7 +52,7 @@ function HomePage() {
                 <div className="space-y-8">
                   {/* Pill-shaped CTA */}
                   <div className="inline-flex items-center bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-medium">
-                    <span>Human Fintech 2025</span>
+                    <span>Кредиты без ограничений</span>
                     <span className="ml-2">•</span>
                     <span className="ml-2">Попробуйте сейчас →</span>
                   </div>
