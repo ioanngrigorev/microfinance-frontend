@@ -106,37 +106,6 @@ function ApplicationPage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 text-center mb-8">
-            Заявка на займ
-          </h1>
-
-        {/* Progress bar */}
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-8">
-          <div className="flex justify-between items-center">
-            <div className={`flex items-center ${step >= 1 ? 'text-gray-900' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
-                1
-              </div>
-              <span className="ml-2 font-semibold text-sm">Предодобрение</span>
-            </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
-            
-            <div className={`flex items-center ${step >= 2 ? 'text-gray-900' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
-                2
-              </div>
-              <span className="ml-2 font-semibold text-sm">Оплата</span>
-            </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
-            
-            <div className={`flex items-center ${step >= 3 ? 'text-gray-900' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
-                ✓
-              </div>
-              <span className="ml-2 font-semibold text-sm">Рассмотрение</span>
-            </div>
-          </div>
-        </div>
 
         {/* Step 1: Предварительное одобрение */}
         {step === 1 && (
@@ -151,71 +120,137 @@ function ApplicationPage() {
               </p>
 
                 {/* Продукты */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <div 
-                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
-                    onClick={() => handleProductSelect({
-                      id: 1,
-                      name: 'Экспресс займ',
-                      amount: 500,
-                      term: 1,
-                      rate: 40.0,
-                      totalAmount: (500 + (500 * (40/12) * 1) / 100).toFixed(2),
-                      description: 'Быстрое одобрение, минимальные требования'
-                    })}
-                  >
-                    <h4 className="text-xl font-bold text-blue-600 mb-3">Экспресс займ</h4>
-                    <p className="text-gray-600 mb-4">Быстрое одобрение, минимальные требования</p>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-semibold">Сумма:</span> $500</p>
-                      <p><span className="font-semibold">Срок:</span> 1 месяц</p>
-                      <p><span className="font-semibold">Ставка:</span> 40% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-100 border-2 border-blue-200 rounded-2xl p-8 hover:border-blue-400 transition-all hover:shadow-xl hover:scale-105">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-white text-2xl font-bold">⚡</span>
+                      </div>
+                      <h4 className="text-2xl font-bold text-blue-700 mb-2">Экспресс</h4>
+                      <p className="text-blue-600 text-sm">Быстрое одобрение, минимальные требования</p>
                     </div>
+                    <div className="space-y-3 text-gray-700 mb-6">
+                      <div className="flex justify-between">
+                        <span className="font-medium">Сумма:</span>
+                        <span className="font-bold text-gray-900">$500</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Срок:</span>
+                        <span className="font-bold text-gray-900">1 месяц</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Ставка:</span>
+                        <span className="font-bold text-gray-900">40% годовых</span>
+                      </div>
+                      <div className="border-t pt-3 mt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-gray-700">К возврату:</span>
+                          <span className="text-xl font-bold text-green-600">${(500 + (500 * (40/12) * 1) / 100).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleProductSelect({
+                        id: 1,
+                        name: 'Экспресс займ',
+                        amount: 500,
+                        term: 1,
+                        rate: 40.0,
+                        totalAmount: (500 + (500 * (40/12) * 1) / 100).toFixed(2),
+                        description: 'Быстрое одобрение, минимальные требования'
+                      })}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors"
+                    >
+                      Выбрать
+                    </button>
                   </div>
 
-                  <div 
-                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
-                    onClick={() => handleProductSelect({
-                      id: 2,
-                      name: 'Стандартный займ',
-                      amount: 2500,
-                      term: 6,
-                      rate: 30.0,
-                      totalAmount: (2500 + (2500 * (30/12) * 6) / 100).toFixed(2),
-                      description: 'Оптимальные условия, подходит для большинства'
-                    })}
-                  >
-                    <h4 className="text-xl font-bold text-blue-600 mb-3">Стандартный займ</h4>
-                    <p className="text-gray-600 mb-4">Оптимальные условия, подходит для большинства</p>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-semibold">Сумма:</span> $2,500</p>
-                      <p><span className="font-semibold">Срок:</span> 6 месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 30% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</p>
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-100 border-2 border-green-200 rounded-2xl p-8 hover:border-green-400 transition-all hover:shadow-xl hover:scale-105">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-white text-2xl font-bold">⭐</span>
+                      </div>
+                      <h4 className="text-2xl font-bold text-green-700 mb-2">Стандарт</h4>
+                      <p className="text-green-600 text-sm">Оптимальные условия, подходит для большинства</p>
                     </div>
-              </div>
+                    <div className="space-y-3 text-gray-700 mb-6">
+                      <div className="flex justify-between">
+                        <span className="font-medium">Сумма:</span>
+                        <span className="font-bold text-gray-900">$2,500</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Срок:</span>
+                        <span className="font-bold text-gray-900">6 месяцев</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Ставка:</span>
+                        <span className="font-bold text-gray-900">30% годовых</span>
+                      </div>
+                      <div className="border-t pt-3 mt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-gray-700">К возврату:</span>
+                          <span className="text-xl font-bold text-green-600">${(2500 + (2500 * (30/12) * 6) / 100).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleProductSelect({
+                        id: 2,
+                        name: 'Стандартный займ',
+                        amount: 2500,
+                        term: 6,
+                        rate: 30.0,
+                        totalAmount: (2500 + (2500 * (30/12) * 6) / 100).toFixed(2),
+                        description: 'Оптимальные условия, подходит для большинства'
+                      })}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors"
+                    >
+                      Выбрать
+                    </button>
+                  </div>
 
-                  <div 
-                    className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 cursor-pointer transition-all hover:shadow-lg"
-                    onClick={() => handleProductSelect({
-                      id: 3,
-                      name: 'Премиум займ',
-                      amount: 4800,
-                      term: 12,
-                      rate: 20.0,
-                      totalAmount: (4800 + (4800 * (20/12) * 12) / 100).toFixed(2),
-                      description: 'Выгодные условия для постоянных клиентов'
-                    })}
-                  >
-                    <h4 className="text-xl font-bold text-blue-600 mb-3">Премиум займ</h4>
-                    <p className="text-gray-600 mb-4">Выгодные условия для постоянных клиентов</p>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-semibold">Сумма:</span> $4,800</p>
-                      <p><span className="font-semibold">Срок:</span> 12 месяцев</p>
-                      <p><span className="font-semibold">Ставка:</span> 20% годовых</p>
-                      <p className="text-lg font-bold text-green-600">К возврату: ${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</p>
+                  <div className="bg-gradient-to-br from-purple-50 to-violet-100 border-2 border-purple-200 rounded-2xl p-8 hover:border-purple-400 transition-all hover:shadow-xl hover:scale-105">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-white text-2xl font-bold">👑</span>
+                      </div>
+                      <h4 className="text-2xl font-bold text-purple-700 mb-2">Премиум</h4>
+                      <p className="text-purple-600 text-sm">Выгодные условия для постоянных клиентов</p>
                     </div>
+                    <div className="space-y-3 text-gray-700 mb-6">
+                      <div className="flex justify-between">
+                        <span className="font-medium">Сумма:</span>
+                        <span className="font-bold text-gray-900">$4,800</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Срок:</span>
+                        <span className="font-bold text-gray-900">12 месяцев</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Ставка:</span>
+                        <span className="font-bold text-gray-900">20% годовых</span>
+                      </div>
+                      <div className="border-t pt-3 mt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-gray-700">К возврату:</span>
+                          <span className="text-xl font-bold text-green-600">${(4800 + (4800 * (20/12) * 12) / 100).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleProductSelect({
+                        id: 3,
+                        name: 'Премиум займ',
+                        amount: 4800,
+                        term: 12,
+                        rate: 20.0,
+                        totalAmount: (4800 + (4800 * (20/12) * 12) / 100).toFixed(2),
+                        description: 'Выгодные условия для постоянных клиентов'
+                      })}
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors"
+                    >
+                      Выбрать
+                    </button>
                   </div>
                 </div>
               </div>
