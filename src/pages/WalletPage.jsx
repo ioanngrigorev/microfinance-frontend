@@ -1,16 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import WalletManager from '../components/WalletManager'
 import StablecoinBalance from '../components/StablecoinBalance'
 import LoanDisbursement from '../components/LoanDisbursement'
 import ApplicationStatus from '../components/ApplicationStatus'
 
 function WalletPage() {
+  const location = useLocation()
   const [walletAddress, setWalletAddress] = useState('')
   const [selectedLoan, setSelectedLoan] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [showApplicationStatus, setShowApplicationStatus] = useState(false)
   const [activeTab, setActiveTab] = useState('wallet') // 'wallet' или 'applications'
+
+  // Проверяем URL параметры при загрузке страницы
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    const phone = urlParams.get('phone')
+    const tab = urlParams.get('tab')
+    
+    if (phone) {
+      setPhoneNumber(phone)
+      setShowApplicationStatus(true)
+    }
+    
+    if (tab === 'applications') {
+      setActiveTab('applications')
+    }
+  }, [location.search])
 
   const handleWalletConnected = (address) => {
     setWalletAddress(address)

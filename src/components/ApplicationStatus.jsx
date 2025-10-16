@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useApplication } from '../context/ApplicationContext'
+import applicationService from '../services/applicationService'
 
 const ApplicationStatus = ({ phoneNumber }) => {
-  const { getApplicationByPhone, currentApplication, isLoading, error } = useApplication()
-  const [localLoading, setLocalLoading] = useState(false)
+  const [currentApplication, setCurrentApplication] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (phoneNumber) {
@@ -12,13 +13,16 @@ const ApplicationStatus = ({ phoneNumber }) => {
   }, [phoneNumber])
 
   const loadApplication = async () => {
-    setLocalLoading(true)
+    setIsLoading(true)
+    setError(null)
     try {
-      await getApplicationByPhone(phoneNumber)
+      const result = await applicationService.getApplicationByPhone(phoneNumber)
+      setCurrentApplication(result)
     } catch (err) {
+      setError(err.message)
       console.error('Ошибка загрузки заявки:', err)
     } finally {
-      setLocalLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -96,7 +100,7 @@ const ApplicationStatus = ({ phoneNumber }) => {
     return new Date(dateString).toLocaleString('ru-RU')
   }
 
-  if (localLoading || isLoading) {
+  if (isLoading) {
     return (
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg">
         <div className="animate-pulse">
@@ -242,7 +246,7 @@ const ApplicationStatus = ({ phoneNumber }) => {
               Ваша заявка одобрена. Подключите крипто кошелек для получения средств.
             </p>
             <button
-              onClick={() => window.location.href = '/crypto-wallet'}
+              onClick={() => window.location.href = '/wallet?tab=wallet'}
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Подключить кошелек
@@ -250,11 +254,20 @@ const ApplicationStatus = ({ phoneNumber }) => {
           </div>
         )}
 
-        {currentApplication.status === 'DISBURSED' && (
+        {currentApplication.status === 'PAID' && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-900 mb-2">Средства выданы!</h4>
+            <h4 className="font-semibold text-blue-900 mb-2">Оплата подтверждена!</h4>
             <p className="text-blue-800">
-              Займ в размере ${currentApplication.amount} успешно переведен на ваш кошелек.
+              Ваша заявка оплачена и кошелек подключен. Ожидайте рассмотрения.
+            </p>
+          </div>
+        )}
+
+        {currentApplication.status === 'REJECTED' && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <h4 className="font-semibold text-red-900 mb-2">Заявка отклонена</h4>
+            <p className="text-red-800">
+              К сожалению, ваша заявка была отклонена. Проверьте комментарии администратора.
             </p>
           </div>
         )}
