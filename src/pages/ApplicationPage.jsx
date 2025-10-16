@@ -5,9 +5,8 @@ function ApplicationPage() {
   const location = useLocation()
   const navigate = useNavigate()
   
-  const [step, setStep] = useState(1) // 1: Анализ и предодобрение, 2: Оплата, 3: Рассмотрение
-  const [loading, setLoading] = useState(true)
-  const [analysisProgress, setAnalysisProgress] = useState(0)
+  const [step, setStep] = useState(1) // 1: Предодобрение, 2: Оплата, 3: Рассмотрение
+  const [loading, setLoading] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [paymentCompleted, setPaymentCompleted] = useState(false)
   const [finalDecision, setFinalDecision] = useState(null) // 'approved' or 'rejected'
@@ -86,30 +85,16 @@ function ApplicationPage() {
         }, 2000)
   }
 
-  // Эффект для автоматического перехода между шагами
+  // Эффект для финального решения
   useEffect(() => {
-    if (step === 1) {
-      // Анимация прогресса анализа
-      const progressInterval = setInterval(() => {
-        setAnalysisProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(progressInterval)
-            setLoading(false)
-            return 100
-          }
-          return prev + 2
-        })
-      }, 50)
-
-      return () => clearInterval(progressInterval)
-    } else if (step === 3) {
+    if (step === 3) {
       // Финальное рассмотрение
-    setLoading(true)
+      setLoading(true)
       const decisionTimer = setTimeout(() => {
         // Имитация финального решения: 70% одобрено, 30% отказано
         const isApproved = Math.random() < 0.7
         setFinalDecision(isApproved ? 'approved' : 'rejected')
-      setLoading(false)
+        setLoading(false)
         setStep(4) // Переход к финальному результату
       }, 5000) // 5 секунд на "принятие решения"
 
@@ -118,108 +103,52 @@ function ApplicationPage() {
   }, [step])
 
   return (
-    <div className="min-h-screen animated-gradient-bg">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-white text-center mb-8">
-            Заявка на займ 📝
+          <h1 className="text-4xl font-bold text-gray-900 text-center mb-8">
+            Заявка на займ
           </h1>
 
         {/* Progress bar */}
-        <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg shadow-lg p-4 mb-8">
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-8">
           <div className="flex justify-between items-center">
-            <div className={`flex items-center ${step >= 1 ? 'text-white' : 'text-white/50'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
+            <div className={`flex items-center ${step >= 1 ? 'text-gray-900' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
                 1
               </div>
-              <span className="ml-1 font-semibold hidden lg:inline text-xs">Анализ</span>
+              <span className="ml-2 font-semibold text-sm">Предодобрение</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-white' : 'bg-white/30'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
             
-            <div className={`flex items-center ${step >= 2 ? 'text-white' : 'text-white/50'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
+            <div className={`flex items-center ${step >= 2 ? 'text-gray-900' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
                 2
               </div>
-              <span className="ml-1 font-semibold hidden lg:inline text-xs">Оплата</span>
+              <span className="ml-2 font-semibold text-sm">Оплата</span>
             </div>
-            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-white' : 'bg-white/30'}`}></div>
+            <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
             
-            <div className={`flex items-center ${step >= 3 ? 'text-white' : 'text-white/50'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-white text-gray-900' : 'bg-white/30 text-white'}`}>
+            <div className={`flex items-center ${step >= 3 ? 'text-gray-900' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
                 ✓
               </div>
-              <span className="ml-1 font-semibold hidden lg:inline text-xs">Рассмотрение</span>
+              <span className="ml-2 font-semibold text-sm">Рассмотрение</span>
             </div>
           </div>
         </div>
 
-        {/* Step 1: Анализ и предодобрение */}
+        {/* Step 1: Предварительное одобрение */}
         {step === 1 && (
-          <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl shadow-2xl p-8">
-            {loading ? (
-              // Фаза анализа
-              <div className="text-center">
-                <div className="mb-8">
-                  <div className="text-6xl mb-4">⏳</div>
-                  <h2 className="text-3xl font-bold text-white mb-4">Анализ вашей заявки</h2>
-                  <p className="text-white/80 text-lg">
-                    Система принятия решений анализирует ваши данные...
-                  </p>
-                </div>
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-8">
+            <div>
 
-                {/* Отображение данных из калькулятора */}
-                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 mb-8">
-                  <h4 className="font-semibold text-white mb-4">Ваши параметры займа:</h4>
-                  <div className="grid grid-cols-2 gap-4 text-sm text-white/80">
-                    <div><span className="font-medium">Сумма:</span> ${formData.amount}</div>
-                    <div><span className="font-medium">Срок:</span> {formData.termDays} месяцев</div>
-                    <div><span className="font-medium">Телефон:</span> {formData.phoneNumber}</div>
-                    <div><span className="font-medium">Email:</span> {formData.email}</div>
-                    <div className="col-span-2"><span className="font-medium">Цель:</span> {formData.loanPurpose}</div>
-                  </div>
-                </div>
 
-                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 mb-8">
-                  <h3 className="text-xl font-semibold text-white mb-4">Проверяем:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Кредитная история
-                    </div>
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Доходы и расходы
-                    </div>
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Банковские данные
-                    </div>
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Скоринг-модель
-                    </div>
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Риск-анализ
-                    </div>
-                    <div className="flex items-center text-white/80">
-                      <span className="text-green-300 mr-2">✔</span> Финальная проверка
-                    </div>
-                </div>
-              </div>
 
-                <div className="mb-8">
-                  <div className="bg-white/30 rounded-full h-3 mb-4">
-                    <div className="bg-white h-3 rounded-full transition-all duration-300" style={{width: `${analysisProgress}%`}}></div>
-                  </div>
-                  <p className="text-white/80">Анализ завершен на {analysisProgress}%</p>
-              </div>
-
-                <p className="text-white font-semibold text-lg">Принимаем предварительное решение...</p>
-              </div>
-            ) : (
-              // Фаза предодобрения
-              <div>
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">Предварительное одобрение!</h2>
-                <p className="text-white/80 text-center mb-8">
-                  🎉 Поздравляем! Система принятия решений предварительно одобрила вашу заявку.
-                  Выберите один из предложенных продуктов:
-                </p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Предварительно одобренные продукты</h2>
+              <p className="text-gray-600 text-center mb-8">
+                Выберите один из предложенных продуктов:
+              </p>
 
                 {/* Продукты */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
