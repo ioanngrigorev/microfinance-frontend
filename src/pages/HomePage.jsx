@@ -109,8 +109,7 @@ function HomePage() {
                 <div className="bg-gray-50 px-4 py-3 border-b">
                   <div className="flex justify-between items-center">
                     <div>
-                      <h3 className="font-bold text-gray-900">Human Fintech</h3>
-                      <p className="text-sm text-gray-600">Кредитный лимит</p>
+                      <h3 className="font-bold text-gray-900">Выбери сумму и срок кредита</h3>
                     </div>
                     <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
                   </div>
@@ -129,7 +128,10 @@ function HomePage() {
                         step="100"
                         value={amount}
                         onChange={(e) => setAmount(Number(e.target.value))}
-                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
+                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer slider-blue"
+                        style={{
+                          background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((amount - 100) / (10000 - 100)) * 100}%, #dbeafe ${((amount - 100) / (10000 - 100)) * 100}%, #dbeafe 100%)`
+                        }}
                       />
                       <div className="flex justify-between text-xs text-gray-500 mt-1">
                         <span>$100</span>
@@ -152,7 +154,10 @@ function HomePage() {
                         step="1"
                         value={term}
                         onChange={(e) => setTerm(Number(e.target.value))}
-                        className="w-full h-2 bg-green-200 rounded-lg appearance-none cursor-pointer"
+                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer slider-blue"
+                        style={{
+                          background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((term - 1) / (12 - 1)) * 100}%, #dbeafe ${((term - 1) / (12 - 1)) * 100}%, #dbeafe 100%)`
+                        }}
                       />
                       <div className="flex justify-between text-xs text-gray-500 mt-1">
                         <span>1 месяц</span>
