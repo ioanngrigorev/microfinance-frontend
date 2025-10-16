@@ -19,16 +19,36 @@ function HomePage() {
 
   const payment = calculatePayment()
 
+  const handlePhoneChange = (e) => {
+    let value = e.target.value
+    
+    // Удаляем все символы кроме + и цифр
+    value = value.replace(/[^\d+]/g, '')
+    
+    // Если начинается не с +, добавляем +
+    if (value && !value.startsWith('+')) {
+      value = '+' + value
+    }
+    
+    // Ограничиваем до + и 11 цифр (максимум 12 символов)
+    if (value.length > 12) {
+      value = value.substring(0, 12)
+    }
+    
+    setPhoneNumber(value)
+    if (phoneError) setPhoneError('')
+  }
+
   const handleGetMoney = () => {
     if (!phoneNumber.trim()) {
       setPhoneError('Пожалуйста, введите номер телефона')
       return
     }
     
-    // Простая валидация номера телефона
-    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/
+    // Проверяем формат: + и 11 цифр
+    const phoneRegex = /^\+[0-9]{11}$/
     if (!phoneRegex.test(phoneNumber)) {
-      setPhoneError('Пожалуйста, введите корректный номер телефона')
+      setPhoneError('Введите номер в формате +7XXXXXXXXXX (11 цифр после +)')
       return
     }
     
@@ -66,14 +86,12 @@ function HomePage() {
                   <input
                     type="tel"
                     value={phoneNumber}
-                    onChange={(e) => {
-                      setPhoneNumber(e.target.value)
-                      if (phoneError) setPhoneError('')
-                    }}
+                    onChange={handlePhoneChange}
                     className={`w-full px-4 py-3 border rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       phoneError ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="+7 (999) 123-45-67"
+                    placeholder="+7XXXXXXXXXX"
+                    maxLength="12"
                     required
                   />
                   {phoneError && (
